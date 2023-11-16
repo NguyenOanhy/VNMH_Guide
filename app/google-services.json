@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1039238111056",
+    "firebase_url": "https://ticket-b992f-default-rtdb.firebaseio.com",
+    "project_id": "ticket-b992f",
+    "storage_bucket": "ticket-b992f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039238111056:android:c2644f91ebf70b3e1cd655",
+        "android_client_info": {
+          "package_name": "com.example.VNMH"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO8VC6otRQ-bbFSsJo8JywhqP4Jx4g0NY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039238111056:android:2b709d25f2f499ca1cd655",
+        "android_client_info": {
+          "package_name": "com.example.museumapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO8VC6otRQ-bbFSsJo8JywhqP4Jx4g0NY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039238111056:android:5b2df6ed89d87c8c1cd655",
+        "android_client_info": {
+          "package_name": "com.winx.ticket"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO8VC6otRQ-bbFSsJo8JywhqP4Jx4g0NY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
