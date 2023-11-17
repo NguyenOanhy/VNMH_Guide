@@ -10,8 +10,10 @@ data class MuseumItem(
     val images: String,
     val imageDescription:String,
     val nonPresenterAuthorsName: String,
-    val role: String,
-    val subjects: List<List<String>>,
     val title: String,
-    val year: String
+    val year: String,
+    val image1: String,
+    val description1: String,
+    val image2: String,
+    val description2: String
 )

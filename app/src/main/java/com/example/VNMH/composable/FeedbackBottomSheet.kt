@@ -95,9 +95,3 @@ fun FeedbackBottomSheet(shakeDetector: ShakeDetector?, onSendFeedback: (String) 
         }
     }
 }
-
-@Preview
-@Composable
-fun FeedbackBottomSheetPreview() {
-    FeedbackBottomSheet(shakeDetector = null, onSendFeedback = {})
-}

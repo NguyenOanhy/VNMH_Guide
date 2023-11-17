@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -35,9 +37,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.VNMH.viewModel.MuseumViewModel
 import kotlinx.coroutines.delay
 
@@ -129,20 +133,13 @@ fun CollectionsCard(
                 )
             }
 
-            Text(
-                text = "Choose the museum you are interested in...",
-                modifier = Modifier
-                    .padding(0.dp, 32.dp, 0.dp, 32.dp),
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Normal,
-            )
 
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
+                Spacer(modifier = Modifier.height(300.dp))
                 ElevatedCard(
                     elevation = CardDefaults.cardElevation(
                         defaultElevation = 0.dp
@@ -153,87 +150,41 @@ fun CollectionsCard(
                         .size(width = 240.dp, height = 60.dp)
                         .padding(4.dp)
                         .clickable {
-                            selectedCard("Tuusula Museum")
-                            // Call the function to load Tuusula Museum data
-                            viewModel.fetchTuusulaDrawings()
-                            // Navigate to the "collectionList" screen
-                            navController.navigate("collectionList")
-                        },
-
-                    ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "Tuusula Museum",
-                            textAlign = TextAlign.Center,
-                            fontSize = 20.sp,
-                        )
-                    }
-                }
-
-                ElevatedCard(
-                    elevation = CardDefaults.cardElevation(
-                        defaultElevation = 0.dp
-                    ),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .size(width = 240.dp, height = 60.dp)
-                        .padding(4.dp)
-                        .clickable {
-                            selectedCard("Ateneum Museum")
-                            // Call the function to load Ateneum Museum data
-                            viewModel.fetchAteneumGraphics()
-                            navController.navigate("collectionList")
-                        },
-
-                    ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "Ateneum Museum",
-                            textAlign = TextAlign.Center,
-                            fontSize = 20.sp,
-                        )
-                    }
-                }
-
-                ElevatedCard(
-                    elevation = CardDefaults.cardElevation(
-                        defaultElevation = 0.dp
-                    ),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .size(width = 240.dp, height = 60.dp)
-                        .padding(4.dp)
-                        .clickable {
-                            selectedCard("Photography Museum")
+                            selectedCard("Start")
                             // Call the function to load Photograph Museum data
-                            viewModel.fetchCitiesPhotograhs()
+                            viewModel.fetchBeforePhotograhs()
                             navController.navigate("collectionList")
                         },
 
-                    ) {
+                    )
+                {
                     Box(
                         modifier = Modifier
                             .fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "Photography Museum",
+                            text = "Bắt đầu",
                             textAlign = TextAlign.Center,
                             fontSize = 20.sp,
                         )
                     }
+
                 }
             }
+
         }
     }
+}
+
+@Composable
+@Preview
+fun CollectionsCardPreview() {
+    var selectedMuseum: String? = null
+
+    CollectionsCard(
+        navController = rememberNavController(),
+        viewModel = MuseumViewModel(),
+        selectedCard = { museum -> selectedMuseum = museum }
+    )
 }

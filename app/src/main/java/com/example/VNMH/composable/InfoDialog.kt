@@ -50,7 +50,7 @@ fun InfoDialog(onDismiss: () -> Unit) {
                     fontSize = 16.sp
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                AnnotatedString.Builder("Authors: Ainara Larrañaga Flores, Ying Zhang, Anjan Shakya, Ivan Gromov").apply {
+                AnnotatedString.Builder("Authors: Nguyen Thi Oanh, Bui Thi Huong Giang, Dinh Thi Mai Linh, Tran Dieu Anh").apply {
                     addStyle(SpanStyle(fontWeight = FontWeight.SemiBold), 0, 8)
                 }.let {
                     Text(
@@ -70,7 +70,7 @@ fun InfoDialog(onDismiss: () -> Unit) {
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
-                AnnotatedString.Builder("Version: 1.0 (October 2023)").apply {
+                AnnotatedString.Builder("Version: 1.0 (November 2023)").apply {
                     addStyle(SpanStyle(fontWeight = FontWeight.SemiBold), 0, 8)
                 }.let {
                     Text(

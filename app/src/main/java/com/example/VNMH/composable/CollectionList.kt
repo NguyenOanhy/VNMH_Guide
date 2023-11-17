@@ -69,113 +69,44 @@ fun CollectionList(
     var selectedTabIndex by remember { mutableIntStateOf(0) }
 
     val tabs = when (selectedCard) {
-        "Tuusula Museum" -> listOf("Drawings", "Pictures")
-        "Ateneum Museum" -> listOf("Graphics", "Sculptures")
-        "Photography Museum" -> listOf("Cities", "Agriculture")
+        "Start" -> listOf("Trước năm 1945", "Sau năm 1945")
         else -> emptyList()
     }
 
     Column {
         // Content based on the selected tab
         when (selectedCard) {
-            "Tuusula Museum" -> {
+
+            "Start" -> {
                 when (selectedTabIndex) {
                     0 -> {
                         Text(
-                            text = "Tuusula Museum",
+                            text = "Bảo tàng Lịch sử Quốc gia",
                             modifier = Modifier.padding(20.dp, 24.dp, 20.dp, 2.dp),
                             fontSize = 28.sp,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "Drawings collection",
+                            text = "Trước năm 1945",
                             modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
                             fontSize = 16.sp
                         )
-                        viewModel.fetchTuusulaDrawings()
+                        viewModel.fetchBeforePhotograhs()
                     }
 
                     1 -> {
                         Text(
-                            text = "Tuusula Museum",
+                            text = "Bảo tàng Lịch sử Quốc gia",
                             modifier = Modifier.padding(20.dp, 24.dp, 20.dp, 2.dp),
                             fontSize = 28.sp,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "Pictures collection",
+                            text = "Sau năm 1945",
                             modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
                             fontSize = 16.sp
                         )
-                        viewModel.fetchTuusulaPictures()
-                    }
-                }
-            }
-
-            "Ateneum Museum" -> {
-                when (selectedTabIndex) {
-                    0 -> {
-                        Text(
-                            text = "Ateneum Museum",
-                            modifier = Modifier.padding(20.dp, 24.dp, 20.dp, 2.dp),
-                            fontSize = 28.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            text = "Graphics collection",
-                            modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
-                            fontSize = 16.sp
-                        )
-                        viewModel.fetchAteneumGraphics()
-                    }
-
-                    1 -> {
-                        Text(
-                            text = "Ateneum Museum",
-                            modifier = Modifier.padding(20.dp, 24.dp, 20.dp, 2.dp),
-                            fontSize = 28.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            text = "Sculpture collection",
-                            modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
-                            fontSize = 16.sp
-                        )
-                        viewModel.fetchAteneumSculptures()
-                    }
-                }
-            }
-
-            "Photography Museum" -> {
-                when (selectedTabIndex) {
-                    0 -> {
-                        Text(
-                            text = "Photography Museum",
-                            modifier = Modifier.padding(20.dp, 24.dp, 20.dp, 2.dp),
-                            fontSize = 28.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            text = "Cities collection",
-                            modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
-                            fontSize = 16.sp
-                        )
-                        viewModel.fetchCitiesPhotograhs()
-                    }
-
-                    1 -> {
-                        Text(
-                            text = "Photography Museum",
-                            modifier = Modifier.padding(20.dp, 24.dp, 20.dp, 2.dp),
-                            fontSize = 28.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            text = "Agriculture collection",
-                            modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
-                            fontSize = 16.sp
-                        )
-                        viewModel.fetchAgriculturePhotographs()
+                        viewModel.fetchAfterPhotographs()
                     }
                 }
             }
