@@ -40,13 +40,13 @@ fun FavouritesView(favouriteViewModel: FavouriteViewModel) {
             Column(modifier = Modifier.fillMaxSize()) {
 
                 Text(
-                    text = "Favorites",
+                    text = "Mục ưa thích",
                     modifier = Modifier.padding(20.dp, 24.dp, 20.dp, 2.dp),
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "Your curated collection, available anytime offline",
+                    text = "Bộ sưu tập có thể xem ngoại tuyến",
                     modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
                     fontSize = 16.sp,
                 )

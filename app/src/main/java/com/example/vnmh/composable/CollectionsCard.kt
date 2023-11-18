@@ -176,15 +176,3 @@ fun CollectionsCard(
         }
     }
 }
-
-@Composable
-@Preview
-fun CollectionsCardPreview() {
-    var selectedMuseum: String? = null
-
-    CollectionsCard(
-        navController = rememberNavController(),
-        viewModel = MuseumViewModel(),
-        selectedCard = { museum -> selectedMuseum = museum }
-    )
-}
