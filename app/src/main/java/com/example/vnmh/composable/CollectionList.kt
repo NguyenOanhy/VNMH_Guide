@@ -203,7 +203,7 @@ fun CollectionList(
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
                                     text = item.nonPresenterAuthorsName.trim()
-                                        .takeIf { it.isNotEmpty() } ?: "Unknown Artist",
+                                        .takeIf { it.isNotEmpty() } ?: "Unknown",
                                     fontSize = 14.sp,
                                     color = Color.Black
                                 )

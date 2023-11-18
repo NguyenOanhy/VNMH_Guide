@@ -50,6 +50,15 @@ fun CollectionDetailView(selectedItem: MuseumItem) {
             .build()
     )
 
+    val addImagePainter3 = rememberAsyncImagePainter(
+        ImageRequest.Builder(LocalContext.current)
+            .data(data = selectedItem.image3) // Replace with the correct property holding the additional image URL
+            .apply {
+                crossfade(true)
+            }
+            .build()
+    )
+
     Box(
         modifier = Modifier.fillMaxSize()
             .verticalScroll(rememberScrollState())
@@ -125,6 +134,28 @@ fun CollectionDetailView(selectedItem: MuseumItem) {
                 if (selectedItem.description2.isNotEmpty()) {
                     Text(
                         text = selectedItem.description2,
+                        modifier = Modifier
+                            .padding(start = 24.dp, top = 0.dp, end = 24.dp, bottom = 24.dp)
+                    )
+                }
+            }
+
+            // Check if image3 is not empty
+            if (selectedItem.image3.isNotEmpty()) {
+                Image(
+                    painter = addImagePainter3,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .padding(24.dp, 24.dp),
+                    alignment = Alignment.Center,
+                )
+
+                // Check if description3 is not empty
+                if (selectedItem.description3.isNotEmpty()) {
+                    Text(
+                        text = selectedItem.description3,
                         modifier = Modifier
                             .padding(start = 24.dp, top = 0.dp, end = 24.dp, bottom = 24.dp)
                     )

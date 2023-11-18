@@ -15,5 +15,7 @@ data class MuseumItem(
     val image1: String,
     val description1: String,
     val image2: String,
-    val description2: String
+    val description2: String,
+    val image3: String,
+    val description3: String
 )

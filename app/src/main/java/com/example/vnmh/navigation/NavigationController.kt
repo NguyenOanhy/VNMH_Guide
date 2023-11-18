@@ -48,7 +48,7 @@ fun NavigationController(
 ) {
     // Function to get the image URL from Firebase Storage
     fun getImageUrl(): String {
-        return "https://firebasestorage.googleapis.com/v0/b/ticket-b992f.appspot.com/o/images%2FBaoTangLichSu.jpg?alt=media&token=d3ffd783-1148-43eb-a969-db61c264b5bc"
+        return "https://firebasestorage.googleapis.com/v0/b/ticket-b992f.appspot.com/o/images%2FBaoTangLichSu.jpg?alt=media&token=82ecef7e-297d-4118-b5b9-d0eeaf93151d"
     }
 
     // State to track the selected card
