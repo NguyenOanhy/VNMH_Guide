@@ -32,34 +32,6 @@ fun CollectionDetailView(selectedItem: MuseumItem) {
             }).build()
     )
 
-    val addImagePainter1 = rememberAsyncImagePainter(
-        ImageRequest.Builder(LocalContext.current)
-            .data(data = selectedItem.image1) // Replace with the correct property holding the additional image URL
-            .apply {
-                crossfade(true)
-            }
-            .build()
-    )
-
-    val addImagePainter2 = rememberAsyncImagePainter(
-        ImageRequest.Builder(LocalContext.current)
-            .data(data = selectedItem.image2) // Replace with the correct property holding the additional image URL
-            .apply {
-                crossfade(true)
-            }
-            .build()
-    )
-
-    val addImagePainter3 = rememberAsyncImagePainter(
-        ImageRequest.Builder(LocalContext.current)
-            .data(data = selectedItem.image3) // Replace with the correct property holding the additional image URL
-            .apply {
-                crossfade(true)
-            }
-            .build()
-    )
-
-
     Box(
         modifier = Modifier.fillMaxSize()
             .verticalScroll(rememberScrollState())
