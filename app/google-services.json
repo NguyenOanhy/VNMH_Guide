@@ -46,6 +46,25 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1039238111056:android:1c75285a648602621cd655",
+        "android_client_info": {
+          "package_name": "com.example.vnmh"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO8VC6otRQ-bbFSsJo8JywhqP4Jx4g0NY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1039238111056:android:5b2df6ed89d87c8c1cd655",
         "android_client_info": {
           "package_name": "com.winx.ticket"

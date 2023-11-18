@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.VNMH"
+    namespace = "com.example.vnmh"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.VNMH"
+        applicationId = "com.example.vnmh"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
