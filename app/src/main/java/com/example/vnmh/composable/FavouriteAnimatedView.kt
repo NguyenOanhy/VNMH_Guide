@@ -55,16 +55,6 @@ fun FavouriteAnimatedView(favouriteViewModel: FavouriteViewModel) {
         )
     )
 
-    val radius = 8.dp // Adjust the radius of the circular path
-
-    val offsetX = remember(angle) {
-        (radius.value * cos(Math.toRadians(angle.toDouble()))).dp
-    }
-
-    val offsetY = remember(angle) {
-        (radius.value * sin(Math.toRadians(angle.toDouble()))).dp
-    }
-
     // Observe the LiveData
     val favouriteItems by favouriteViewModel.getAllFavourites().observeAsState(emptyList())
 
@@ -82,16 +72,14 @@ fun FavouriteAnimatedView(favouriteViewModel: FavouriteViewModel) {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        val backgroundImage = painterResource(id = R.drawable.museum)
-        val backgroundImageRotate = painterResource(id = R.drawable.museumrotate)
+        val backgroundImage = painterResource(id = R.drawable.favouritebg)
+        val backgroundImageRotate = painterResource(id = R.drawable.favouritebg)
 
         Image(
             painter = if (isLandscape) backgroundImageRotate else backgroundImage,
             contentDescription = null,
-            contentScale = ContentScale.Fit,
-            modifier = Modifier
-                .scale(if (isLandscape) 4.8f else 2.3f)
-                .offset(offsetX, offsetY)
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
         )
         Box(
             modifier = Modifier

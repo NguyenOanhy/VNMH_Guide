@@ -21,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,6 +33,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
+import com.example.vnmh.R
 import com.example.vnmh.composable.CameraView
 import com.example.vnmh.composable.CollectionDetailView
 import com.example.vnmh.composable.CollectionList
@@ -60,9 +62,11 @@ fun NavigationController(
     // Use a Box to layer the background image behind the NavHost
     Box(modifier = Modifier.fillMaxSize()) {
         // Background image using Coil's rememberImagePainter
+        val backgroundImage = painterResource(id = R.drawable.homebg)
         if (currentRoute == NavigationItem.Home.route) {
             Image(
-                painter = rememberImagePainter(getImageUrl()),
+//                painter = rememberImagePainter(getImageUrl()),
+                painter = backgroundImage,
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
