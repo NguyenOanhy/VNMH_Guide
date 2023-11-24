@@ -19,8 +19,8 @@ sealed class NavigationItem (
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector
 ) {
-    object Home1: NavigationItem(route = "collectionsCard", "Home", Icons.Filled.Collections, Icons.Outlined.Collections)
-    object Home: NavigationItem(route = "collectionList", "Collection", Icons.Filled.Collections, Icons.Outlined.Collections)
+    object Home: NavigationItem(route = "collectionsCard", "Home", Icons.Filled.Collections, Icons.Outlined.Collections)
+    object Collection: NavigationItem(route = "collectionList", "Collection", Icons.Filled.Collections, Icons.Outlined.Collections)
     object ARView: NavigationItem(route = "arview", "ARView", Icons.Filled.ViewInAr, Icons.Outlined.ViewInAr)
 
     object Camera: NavigationItem(route = "camera", "Scanner", Icons.Filled.QrCodeScanner, Icons.Outlined.QrCodeScanner)

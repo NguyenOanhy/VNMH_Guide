@@ -59,7 +59,7 @@ fun NavigationController(
     Box(modifier = Modifier.fillMaxSize()) {
         // Background image using Coil's rememberImagePainter
         val backgroundImage = painterResource(id = R.drawable.homebg)
-        if (currentRoute == NavigationItem.Home1.route) {
+        if (currentRoute == NavigationItem.Home.route) {
             Image(
                 painter = backgroundImage,
                 contentDescription = null,
@@ -69,13 +69,12 @@ fun NavigationController(
         }
 
         // NavHost containing your composables
-        NavHost(navController = navController, startDestination = NavigationItem.Home1.route) {
-            composable(NavigationItem.Home1.route) {
+        NavHost(navController = navController, startDestination = NavigationItem.Home.route) {
+            composable(NavigationItem.Home.route) {
                 CollectionsCard(navController = navController, viewModel = viewModel)
-
             }
 
-            composable(NavigationItem.Home.route) {
+            composable(NavigationItem.Collection.route) {
                 val museumData by viewModel.museumData.observeAsState(emptyList())
                 selectedCard.value = "Start"
                 viewModel.fetchBeforePhotograhs()
@@ -156,7 +155,7 @@ fun Material3BottomBar(
 
         items.forEach { item ->
             val isSelected = when (item) {
-                NavigationItem.Home -> currentRoute == item.route || currentRoute == "collectionList" || currentRoute == "collectionDetailView/{itemId}"
+                NavigationItem.Collection -> currentRoute == item.route || currentRoute == "collectionList" || currentRoute == "collectionDetailView/{itemId}"
                 else -> currentRoute == item.route
             }
 
@@ -197,7 +196,7 @@ fun Material3BottomBar(
 fun Navigation(viewModel: MuseumViewModel, favouriteViewModel: FavouriteViewModel) {
     val navController = rememberNavController()
     val items = listOf(
-        NavigationItem.Home,
+        NavigationItem.Collection,
         NavigationItem.ARView,
         NavigationItem.Camera,
         NavigationItem.Favourite
