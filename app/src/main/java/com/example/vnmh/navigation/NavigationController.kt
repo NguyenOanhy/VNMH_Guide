@@ -32,9 +32,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import coil.compose.rememberImagePainter
 import com.example.vnmh.R
 import com.example.vnmh.composable.CameraView
+import com.example.vnmh.composable.ARView
 import com.example.vnmh.composable.CollectionDetailView
 import com.example.vnmh.composable.CollectionList
 import com.example.vnmh.composable.CollectionsCard
@@ -48,10 +48,6 @@ fun NavigationController(
     viewModel: MuseumViewModel,
     favouriteViewModel: FavouriteViewModel
 ) {
-    // Function to get the image URL from Firebase Storage
-    fun getImageUrl(): String {
-        return "https://firebasestorage.googleapis.com/v0/b/ticket-b992f.appspot.com/o/images%2FBaoTangLichSu.jpg?alt=media&token=82ecef7e-297d-4118-b5b9-d0eeaf93151d"
-    }
 
     // State to track the selected card
     val selectedCard = remember { mutableStateOf("") }
@@ -63,9 +59,8 @@ fun NavigationController(
     Box(modifier = Modifier.fillMaxSize()) {
         // Background image using Coil's rememberImagePainter
         val backgroundImage = painterResource(id = R.drawable.homebg)
-        if (currentRoute == NavigationItem.Home.route) {
+        if (currentRoute == NavigationItem.Home1.route) {
             Image(
-//                painter = rememberImagePainter(getImageUrl()),
                 painter = backgroundImage,
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
@@ -74,15 +69,16 @@ fun NavigationController(
         }
 
         // NavHost containing your composables
-        NavHost(navController = navController, startDestination = NavigationItem.Home.route) {
-            composable(NavigationItem.Home.route) {
-                CollectionsCard(navController, viewModel) { cardType ->
-                    selectedCard.value = cardType
-                }
+        NavHost(navController = navController, startDestination = NavigationItem.Home1.route) {
+            composable(NavigationItem.Home1.route) {
+                CollectionsCard(navController = navController, viewModel = viewModel)
+
             }
 
-            composable("collectionList") {
+            composable(NavigationItem.Home.route) {
                 val museumData by viewModel.museumData.observeAsState(emptyList())
+                selectedCard.value = "Start"
+                viewModel.fetchBeforePhotograhs()
                 CollectionList(
                     museumData,
                     viewModel,
@@ -91,6 +87,17 @@ fun NavigationController(
                     favouriteViewModel
                 )
             }
+
+//            composable("collectionList") {
+//                val museumData by viewModel.museumData.observeAsState(emptyList())
+//                CollectionList(
+//                    museumData,
+//                    viewModel,
+//                    selectedCard.value,
+//                    navController,
+//                    favouriteViewModel
+//                )
+//            }
 
             composable("collectionDetailView/{itemId}") { backStackEntry ->
                 // Extract the item ID from the navigation arguments
@@ -108,6 +115,10 @@ fun NavigationController(
                 }
             }
 
+            composable(NavigationItem.ARView.route) {
+                ARView()
+            }
+
             composable(NavigationItem.Camera.route) {
                 CameraView()
             }
@@ -115,6 +126,8 @@ fun NavigationController(
             composable(NavigationItem.Favourite.route) {
                 FavouritesView(favouriteViewModel)
             }
+
+
         }
     }
 
@@ -185,6 +198,7 @@ fun Navigation(viewModel: MuseumViewModel, favouriteViewModel: FavouriteViewMode
     val navController = rememberNavController()
     val items = listOf(
         NavigationItem.Home,
+        NavigationItem.ARView,
         NavigationItem.Camera,
         NavigationItem.Favourite
     )
@@ -205,22 +219,5 @@ fun Navigation(viewModel: MuseumViewModel, favouriteViewModel: FavouriteViewMode
             )
         }
     }
-}
-
-
-@Composable
-@Preview
-fun NavigationControllerPreview() {
-    val navViewModel = MuseumViewModel()
-    val favouriteViewModel = FavouriteViewModel(application = Application())
-
-    val navController = rememberNavController()
-    val items = listOf(
-        NavigationItem.Home,
-        NavigationItem.Camera,
-        NavigationItem.Favourite
-    )
-
-    Material3BottomBar(navController = navController, items = items)
 }
 

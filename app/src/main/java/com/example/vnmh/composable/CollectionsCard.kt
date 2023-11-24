@@ -48,8 +48,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun CollectionsCard(
     navController: NavController,
-    viewModel: MuseumViewModel,
-    selectedCard: (String) -> Unit
+    viewModel: MuseumViewModel
 ) {
     var showDialog by remember { mutableStateOf(false) }
     var currentIconIndex by remember { mutableIntStateOf(0) }
@@ -58,21 +57,6 @@ fun CollectionsCard(
         InfoDialog(onDismiss = { showDialog = false })
     }
 
-    val iconsList = listOf(
-        Icons.Outlined.Palette,
-        Icons.Outlined.Photo,
-        Icons.Outlined.Brush,
-        Icons.Outlined.CameraAlt,
-    )
-
-    // Changing the icon
-    LaunchedEffect(Unit) {
-        val delayTimeMillis = 1750L  // 1.75 seconds
-        while (true) {
-            delay(delayTimeMillis)
-            currentIconIndex = (currentIconIndex + 1) % iconsList.size
-        }
-    }
 
     Column(
         modifier = Modifier
@@ -123,56 +107,7 @@ fun CollectionsCard(
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
                 )
-                Icon(
-                    modifier = Modifier
-                        .size(26.dp)
-                        .align(Alignment.CenterVertically),
-                    imageVector = iconsList[currentIconIndex],
-                    contentDescription = "Decorative Image",
-                    tint = MaterialTheme.colorScheme.onBackground,
-                )
             }
-
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Spacer(modifier = Modifier.height(300.dp))
-                ElevatedCard(
-                    elevation = CardDefaults.cardElevation(
-                        defaultElevation = 0.dp
-                    ),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .size(width = 240.dp, height = 60.dp)
-                        .padding(4.dp)
-                        .clickable {
-                            selectedCard("Start")
-                            // Call the function to load Photograph Museum data
-                            viewModel.fetchBeforePhotograhs()
-                            navController.navigate("collectionList")
-                        },
-
-                    )
-                {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "Bắt đầu",
-                            textAlign = TextAlign.Center,
-                            fontSize = 20.sp,
-                        )
-                    }
-
-                }
-            }
-
         }
     }
 }
