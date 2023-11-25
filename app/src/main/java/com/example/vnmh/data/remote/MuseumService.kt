@@ -1,5 +1,6 @@
 package com.example.vnmh.data.remote
 
+import com.example.vnmh.data.remote.dto.ARItem
 import com.example.vnmh.data.remote.dto.MuseumItem
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
@@ -11,6 +12,8 @@ import io.ktor.client.features.logging.Logging
 interface MuseumService {
     suspend fun getAfterPhotography(): List<MuseumItem>
     suspend fun getBeforePhotography(): List<MuseumItem>
+
+    suspend fun getUrlAR(): List<ARItem>
 
     companion object {
         fun create(): MuseumService {

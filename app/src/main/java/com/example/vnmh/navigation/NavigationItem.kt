@@ -21,7 +21,7 @@ sealed class NavigationItem (
 ) {
     object Home: NavigationItem(route = "collectionsCard", "Home", Icons.Filled.Collections, Icons.Outlined.Collections)
     object Collection: NavigationItem(route = "collectionList", "Collection", Icons.Filled.Collections, Icons.Outlined.Collections)
-    object ARView: NavigationItem(route = "arview", "ARView", Icons.Filled.ViewInAr, Icons.Outlined.ViewInAr)
+    object ARView: NavigationItem(route = "arviewList", "ARView", Icons.Filled.ViewInAr, Icons.Outlined.ViewInAr)
 
     object Camera: NavigationItem(route = "camera", "Scanner", Icons.Filled.QrCodeScanner, Icons.Outlined.QrCodeScanner)
     object Favourite: NavigationItem(route = "favourite", "Favorites", Icons.Filled.Favorite, Icons.Outlined.FavoriteBorder)

@@ -35,6 +35,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.vnmh.R
 import com.example.vnmh.composable.CameraView
 import com.example.vnmh.composable.ARView
+import com.example.vnmh.composable.ARViewList
 import com.example.vnmh.composable.CollectionDetailView
 import com.example.vnmh.composable.CollectionList
 import com.example.vnmh.composable.CollectionsCard
@@ -77,7 +78,6 @@ fun NavigationController(
             composable(NavigationItem.Collection.route) {
                 val museumData by viewModel.museumData.observeAsState(emptyList())
                 selectedCard.value = "Start"
-                viewModel.fetchBeforePhotograhs()
                 CollectionList(
                     museumData,
                     viewModel,
@@ -87,22 +87,10 @@ fun NavigationController(
                 )
             }
 
-//            composable("collectionList") {
-//                val museumData by viewModel.museumData.observeAsState(emptyList())
-//                CollectionList(
-//                    museumData,
-//                    viewModel,
-//                    selectedCard.value,
-//                    navController,
-//                    favouriteViewModel
-//                )
-//            }
-
             composable("collectionDetailView/{itemId}") { backStackEntry ->
                 // Extract the item ID from the navigation arguments
                 val itemId = backStackEntry.arguments?.getString("itemId")
                 val museumData by viewModel.museumData.observeAsState(emptyList())
-                // Retrieve the corresponding MuseumItem based on the item ID
                 val selectedItem = museumData.find { it.id == itemId }
 
                 if (selectedItem != null) {
@@ -115,7 +103,20 @@ fun NavigationController(
             }
 
             composable(NavigationItem.ARView.route) {
-                ARView()
+                val arData by viewModel.arData.observeAsState(emptyList())
+                ARViewList(arItems = arData, viewModel = viewModel, navController = navController)
+            }
+
+            composable("arView/{itemId}") { backStackEntry ->
+                val itemId = backStackEntry.arguments?.getString("itemId")
+                val arData by viewModel.arData.observeAsState(emptyList())
+                val selectedItem = arData.find { it.id == itemId }
+
+                if (selectedItem != null) {
+                    ARView(selectedItem)
+                } else {
+                    Text(text = "Item not found", fontSize = 20.sp)
+                }
             }
 
             composable(NavigationItem.Camera.route) {

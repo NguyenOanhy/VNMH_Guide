@@ -33,7 +33,8 @@ fun CollectionDetailView(selectedItem: MuseumItem) {
     )
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
         Column(

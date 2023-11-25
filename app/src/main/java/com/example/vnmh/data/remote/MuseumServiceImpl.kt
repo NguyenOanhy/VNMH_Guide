@@ -1,5 +1,6 @@
 package com.example.vnmh.data.remote
 
+import com.example.vnmh.data.remote.dto.ARItem
 import com.example.vnmh.data.remote.dto.MuseumItem
 import io.ktor.client.HttpClient
 import io.ktor.client.features.ClientRequestException
@@ -35,6 +36,27 @@ class MuseumServiceImpl(private val client: HttpClient): MuseumService {
     override suspend fun getAfterPhotography(): List<MuseumItem> {
         return try {
             client.get {url(HttpRoutes.AFTER1945)}
+        } catch (e: RedirectResponseException) { // redirect issue
+            // 3xx - responses
+            println("Error redirect: ${e.response.status.description}")
+            emptyList()
+        } catch (e: ClientRequestException) { // post invalid data
+            // 4xx - responses
+            println("Error client: ${e.response.status.description}")
+            emptyList()
+        } catch (e: ServerResponseException) { // server side went wrong e.g database crashed
+            // 5xx - responses
+            println("Error server: ${e.response.status.description}")
+            emptyList()
+        } catch (e: Exception) {
+            println("Error error: ${e.message}")
+            emptyList()
+        }
+    }
+
+    override suspend fun getUrlAR(): List<ARItem> {
+        return try {
+            client.get {url(HttpRoutes.URLARVIEW)}
         } catch (e: RedirectResponseException) { // redirect issue
             // 3xx - responses
             println("Error redirect: ${e.response.status.description}")
