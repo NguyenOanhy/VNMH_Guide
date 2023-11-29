@@ -131,4 +131,5 @@ dependencies {
 
     // System UI Controller for Jetpack Compose
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.31.1-alpha")
+    implementation ("com.google.firebase:firebase-auth:20.0.0")
 }

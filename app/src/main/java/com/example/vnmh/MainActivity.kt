@@ -10,12 +10,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
-import com.example.vnmh.util.ShakeDetector
-import com.example.vnmh.ui.theme.MuseumAppTheme
-import com.example.vnmh.viewModel.MuseumViewModel
 import com.example.vnmh.composable.FeedbackBottomSheet
 import com.example.vnmh.navigation.Navigation
+import com.example.vnmh.ui.theme.MuseumAppTheme
+import com.example.vnmh.util.ShakeDetector
+import com.example.vnmh.util.AuthenticationScreen
 import com.example.vnmh.viewModel.FavouriteViewModel
+import com.example.vnmh.viewModel.MuseumViewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -38,9 +39,20 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun AppContent(viewModel: MuseumViewModel, favouriteViewModel: FavouriteViewModel) {
         MuseumAppTheme {
-            Navigation(viewModel, favouriteViewModel)
+            AuthenticationScreen(
+                onLoginSuccess = {
+                    setContent {
+                        MuseumAppContent(viewModel, favouriteViewModel)
+                    }
+                }
+            )
+        }
+    }
 
-            FeedbackBottomSheet(
+    @Composable
+    fun MuseumAppContent(viewModel: MuseumViewModel, favouriteViewModel: FavouriteViewModel) {
+        Navigation(viewModel, favouriteViewModel)
+        FeedbackBottomSheet(
                 shakeDetector = mShakeDetector,
                 onSendFeedback = { feedback ->
                     val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "ivan@metropolia.fi", null)).apply {
@@ -49,13 +61,17 @@ class MainActivity : ComponentActivity() {
                     }
                     startActivity(emailIntent)
                 }
-            )
-        }
+        )
+
     }
 
     override fun onResume() {
         super.onResume()
-        mSensorManager?.registerListener(mShakeDetector, mSensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI)
+        mSensorManager?.registerListener(
+            mShakeDetector,
+            mSensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+            SensorManager.SENSOR_DELAY_UI
+        )
     }
 
     override fun onPause() {

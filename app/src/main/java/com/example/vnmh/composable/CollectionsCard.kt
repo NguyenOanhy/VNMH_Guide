@@ -1,5 +1,6 @@
 package com.example.vnmh.composable
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Button
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Brush
 import androidx.compose.material.icons.outlined.CameraAlt
@@ -42,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.vnmh.util.FirebaseAuthManager
 import com.example.vnmh.viewModel.MuseumViewModel
 import kotlinx.coroutines.delay
 
@@ -77,7 +80,15 @@ fun CollectionsCard(
             contentDescription = "Info",
             tint = MaterialTheme.colorScheme.onBackground
         )
-
+        Button(
+            modifier = Modifier.padding(16.dp),
+            onClick = {
+                // Đăng xuất
+                FirebaseAuthManager.logout()
+            }
+        ) {
+            androidx.compose.material.Text("Log Out")
+        }
 
         Column(
             modifier = Modifier
