@@ -4,6 +4,8 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.devtools.ksp")
     id("com.google.gms.google-services")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -125,6 +127,18 @@ dependencies {
 
     // Zxing
     implementation("com.google.zxing:core:3.5.2")
+
+    //Dagger - Hilt
+    implementation("com.google.dagger:hilt-android:2.48.1")
+    kapt("com.google.dagger:hilt-compiler:2.48.1")
+    kapt("androidx.hilt:hilt-compiler:1.1.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+
+    //Bar code
+    implementation("com.google.android.gms:play-services-code-scanner:16.1.0")
+    //implementation("io.coil-kt:coil-compose:2.4.0")
+
+
 
     // for material3 ModalBottomSheet
     implementation("androidx.compose.material3:material3:1.1.2")
