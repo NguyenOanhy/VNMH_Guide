@@ -35,8 +35,17 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.example.vnmh.R
 import androidx.compose.runtime.remember
 import android.content.res.Configuration
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.FloatingActionButtonDefaults
+import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material3.Text
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.vnmh.viewModel.FavouriteViewModel
@@ -54,6 +63,7 @@ fun FavouriteAnimatedView(favouriteViewModel: FavouriteViewModel) {
             repeatMode = RepeatMode.Restart
         )
     )
+//    val navController = rememberNavController()
 
     // Observe the LiveData
     val favouriteItems by favouriteViewModel.getAllFavourites().observeAsState(emptyList())
@@ -91,7 +101,6 @@ fun FavouriteAnimatedView(favouriteViewModel: FavouriteViewModel) {
                 modifier = Modifier
                     .fillMaxSize()
             ) {page ->
-
                 val painter = rememberAsyncImagePainter(
                     ImageRequest.Builder(LocalContext.current)
                         .data(data = favouriteItems[page].images)
@@ -99,56 +108,140 @@ fun FavouriteAnimatedView(favouriteViewModel: FavouriteViewModel) {
                             crossfade(true)
                         }).build()
                 )
-                Image(
-                    painter = painter,
-                    contentDescription = null,
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(40.dp)
-                )
-            }
-            Box(
-                modifier = Modifier
-                    .offset(y = -(16).dp)
-                    .fillMaxWidth(0.5f)
-                    .padding(8.dp)
-                    .align(Alignment.BottomCenter)
-            ) {
-                IconButton(
-                    onClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(
-                                pagerState.currentPage - 1
+                if (isLandscape) {
+                    Box(
+                        modifier = Modifier
+//                        .offset(y = (16).dp)
+                            .fillMaxWidth(1f)
+                            .padding(8.dp)
+                            .align(Alignment.Center)
+                    ) {
+                        IconButton(
+                            onClick = {
+                                scope.launch {
+                                    pagerState.animateScrollToPage(
+                                        pagerState.currentPage - 1
+                                    )
+                                }
+                            },
+                            modifier = Modifier
+                                .align(Alignment.CenterStart)
+                                .clip(RoundedCornerShape(100))
+                                .background(MaterialTheme.colorScheme.background)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowLeft,
+                                contentDescription = "Go back"
                             )
                         }
-                    },
-                    modifier = Modifier.align(Alignment.CenterStart)
-                        .clip(RoundedCornerShape(100))
-                        .background(MaterialTheme.colorScheme.background)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.KeyboardArrowLeft,
-                        contentDescription = "Go back"
-                    )
-                }
-                IconButton(
-                    onClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(
-                                pagerState.currentPage + 1
+                        IconButton(
+                            onClick = {
+                                scope.launch {
+                                    pagerState.animateScrollToPage(
+                                        pagerState.currentPage + 1
+                                    )
+                                }
+                            },
+                            modifier = Modifier
+                                .align(Alignment.CenterEnd)
+                                .clip(RoundedCornerShape(100))
+                                .background(MaterialTheme.colorScheme.background)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowRight,
+                                contentDescription = "Go forward"
                             )
                         }
-                    },
-                    modifier = Modifier.align(Alignment.CenterEnd)
-                        .clip(RoundedCornerShape(100))
-                        .background(MaterialTheme.colorScheme.background)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.KeyboardArrowRight,
-                        contentDescription = "Go forward"
-                    )
+                        Row(
+                            modifier = Modifier
+                                .padding(70.dp,20.dp)
+                        ) {
+                            Text(
+                                text = "${favouriteItems[page].title}",
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                                    .padding(20.dp)
+                            )
+                            Image(
+                                painter = painter,
+                                contentDescription = null,
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(end = 50.dp)
+                            )
+                        }
+                    }
+                } else {
+                    Box(
+                        modifier = Modifier
+                            .offset(y = (16).dp)
+                            .padding(8.dp)
+                            .align(Alignment.BottomCenter)
+                    ) {
+                        IconButton(
+                            onClick = {
+                                scope.launch {
+                                    pagerState.animateScrollToPage(
+                                        pagerState.currentPage - 1
+                                    )
+                                }
+                            },
+                            modifier = Modifier
+                                .align(Alignment.CenterStart)
+                                .clip(RoundedCornerShape(100))
+                                .background(MaterialTheme.colorScheme.background)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowLeft,
+                                contentDescription = "Go back"
+                            )
+                        }
+                        IconButton(
+                            onClick = {
+                                scope.launch {
+                                    pagerState.animateScrollToPage(
+                                        pagerState.currentPage + 1
+                                    )
+                                }
+                            },
+                            modifier = Modifier
+                                .align(Alignment.CenterEnd)
+                                .clip(RoundedCornerShape(100))
+                                .background(MaterialTheme.colorScheme.background)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowRight,
+                                contentDescription = "Go forward"
+                            )
+                        }
+                        Column(
+                                Modifier.padding(30.dp, 150.dp)
+                        ) {
+                            Text(
+                                text = "${favouriteItems[page].title}",
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier
+                                    .align(Alignment.CenterHorizontally)
+                                    .padding(10.dp,0.dp),
+                                textAlign = TextAlign.Center,
+                                color = Color.White
+                            )
+                            Image(
+                                painter = painter,
+                                contentDescription = null,
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(40.dp)
+                            )
+                        }
+                    }
                 }
+
             }
         }
     }

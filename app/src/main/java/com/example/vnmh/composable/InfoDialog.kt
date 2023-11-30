@@ -3,21 +3,27 @@ package com.example.vnmh.composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Feedback
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Place
+import androidx.compose.material.icons.filled.PriceChange
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,46 +45,127 @@ fun InfoDialog(onDismiss: () -> Unit) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "About",
+                    text = "Giới thiệu",
+                    modifier = Modifier,
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp
                 )
                 Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier
+                        .padding(top = 10.dp, bottom = 5.dp)
+                        .align(Alignment.Start),
+                ) {
+                    // Hiển thị biểu tượng
+                    Icon(
+//                        imageVector = Icons.Outlined.Home,
+                        imageVector = Icons.Filled.Home,
+                        tint = MaterialTheme.colorScheme.tertiary,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .scale(1.2f) // Điều chỉnh kích thước của biểu tượng
+                            .padding(10.dp, 0.dp)
+                    )
+                    Text(
+                        text = "Giờ mở cửa",
+//                        modifier = Modifier.align(Alignment.Start),
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+//                Spacer(modifier = Modifier.height(5.dp))
                 Text(
-                    text = "This is the Museum App, where you can explore various collections from renowned Finnish museums. Dive in to discover the wonders of art and history!",
-                    modifier = Modifier.align(Alignment.Start),
-                    fontSize = 16.sp
+                    text = "Sáng: 8h đến 12h" +
+                            "\nChiều: từ 13h30 đến 17h" +
+                            "\nMở cửa tất cả các ngày trong tuần (Trừ Thứ Hai)",
+                    fontSize = 14.sp,
+                    modifier = Modifier
+                        .padding(start = 25.dp)
                 )
-                Spacer(modifier = Modifier.height(16.dp))
-                AnnotatedString.Builder("Authors: Nguyen Thi Oanh, Bui Thi Huong Giang, Dinh Thi Mai Linh, Tran Dieu Anh").apply {
-                    addStyle(SpanStyle(fontWeight = FontWeight.SemiBold), 0, 8)
-                }.let {
+                Row(
+                    modifier = Modifier
+                        .padding(top = 10.dp, bottom = 5.dp)
+                        .align(Alignment.Start),
+                ) {
+                    // Hiển thị biểu tượng
+                    Icon(
+                        imageVector = Icons.Filled.PriceChange,
+                        tint = MaterialTheme.colorScheme.tertiary,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .scale(1.2f) // Điều chỉnh kích thước của biểu tượng
+                            .padding(10.dp, 0.dp)
+                    )
                     Text(
-                        text = it.toAnnotatedString(),
-                        modifier = Modifier.align(Alignment.Start),
-                        fontSize = 16.sp
+                        text = "Giá vé",
+//                        modifier = Modifier.align(Alignment.Start),
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
                     )
                 }
-                Spacer(modifier = Modifier.height(16.dp))
-                AnnotatedString.Builder("Feedback: Shake your phone to open the feedback form and let us know about your experience!").apply {
-                    addStyle(SpanStyle(fontWeight = FontWeight.SemiBold), 0, 8)
-                }.let {
+                Text(
+                    text = "Người lớn: 40.000đ/Người" +
+                            "\nSinh viên: 20.000đ/Người" +
+                            "\nHọc sinh: 10.000đ/Người" +
+                            "\nTrẻ em dưới 6 tuổi và người khuyết tật đặc biệt nặng: Miễn phí",
+                    fontSize = 14.sp,
+                    modifier = Modifier
+                        .padding(start = 25.dp)
+                )
+                Row(
+                    modifier = Modifier
+                        .padding(top = 10.dp, bottom = 5.dp)
+                        .align(Alignment.Start),
+                ) {
+                    // Hiển thị biểu tượng
+                    Icon(
+                        imageVector = Icons.Filled.Place,
+                        tint = MaterialTheme.colorScheme.tertiary,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .scale(1.2f) // Điều chỉnh kích thước của biểu tượng
+                            .padding(10.dp, 0.dp)
+                    )
                     Text(
-                        text = it.toAnnotatedString(),
-                        modifier = Modifier.align(Alignment.Start),
-                        fontSize = 16.sp
+                        text = "Địa điểm",
+//                        modifier = Modifier.align(Alignment.Start),
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
                     )
                 }
-                Spacer(modifier = Modifier.height(16.dp))
-                AnnotatedString.Builder("Version: 1.0 (November 2023)").apply {
-                    addStyle(SpanStyle(fontWeight = FontWeight.SemiBold), 0, 8)
-                }.let {
+                Text(
+                    text = "216 Đ.Trần Quang Khải, Tràng Tiền, Hoàn Kiếm, Hà Nội",
+                    fontSize = 14.sp,
+                    modifier = Modifier
+                        .padding(start = 25.dp)
+                )
+                Row(
+                    modifier = Modifier
+                        .padding(top = 10.dp, bottom = 5.dp)
+                        .align(Alignment.Start),
+                ) {
+                    // Hiển thị biểu tượng
+                    Icon(
+                        imageVector = Icons.Filled.Feedback,
+                        tint = MaterialTheme.colorScheme.tertiary,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .scale(1.2f) // Điều chỉnh kích thước của biểu tượng
+                            .padding(10.dp, 0.dp)
+                    )
                     Text(
-                        text = it.toAnnotatedString(),
-                        modifier = Modifier.align(Alignment.Start),
-                        fontSize = 16.sp
+                        text = "Phản hồi",
+//                        modifier = Modifier.align(Alignment.Start),
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
                     )
                 }
+                Text(
+                    text = "Lắc điện thoại của bạn để mở biểu mẫu phản hồi. Hãy cho chúng tôi biết về trải nghiệm của bạn!",
+                    fontSize = 14.sp,
+                    modifier = Modifier
+                        .padding(start = 25.dp)
+                )
                 Spacer(modifier = Modifier.height(24.dp))
                 Button(onClick = onDismiss) {
                     Text("Close")

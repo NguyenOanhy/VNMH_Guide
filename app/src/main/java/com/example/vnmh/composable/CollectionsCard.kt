@@ -1,6 +1,7 @@
 package com.example.vnmh.composable
 
 import android.widget.Toast
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,6 +38,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,6 +60,7 @@ fun CollectionsCard(
 ) {
     var showDialog by remember { mutableStateOf(false) }
     var currentIconIndex by remember { mutableIntStateOf(0) }
+    val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
 
     if (showDialog) {
         InfoDialog(onDismiss = { showDialog = false })
@@ -89,34 +95,50 @@ fun CollectionsCard(
         ) {
             androidx.compose.material.Text("Log Out")
         }
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(30.dp, 0.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Text(
-                text = "Hello,",
+        if(!isLandscape) {
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.Start)
-                    .padding(0.dp, 0.dp, 0.dp, 0.dp),
-                fontSize = 26.sp,
-                fontWeight = FontWeight.Bold,
-            )
+                    .fillMaxSize()
+                    .padding(30.dp, 150.dp),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(
+                    text = "Bảo tàng",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(0.dp, 0.dp, 0.dp, 0.dp),
+                    fontSize = 42.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                )
 
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Lịch sử Quốc gia",
+                        modifier = Modifier
+                            .padding(0.dp, 0.dp, 0.dp, 0.dp),
+                        fontSize = 42.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                }
+            }
+        } else {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Welcome to Museum App!",
+                    text = "Bảo tàng Lịch sử Quốc gia",
                     modifier = Modifier
-                        .padding(0.dp, 0.dp, 8.dp, 0.dp),
-                    fontSize = 26.sp,
+                        .padding(50.dp, 120.dp, 0.dp, 0.dp),
+                    fontSize = 42.sp,
                     fontWeight = FontWeight.Bold,
+                    color = Color.White
                 )
             }
         }

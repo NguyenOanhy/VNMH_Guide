@@ -124,7 +124,7 @@ fun FavouriteItemCard(
                 val icon = if (isFavourite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
                 Icon(
                     imageVector = icon,
-                    contentDescription = "Favorite",
+                    contentDescription = "Mục ưa thích",
                     modifier = Modifier.size(24.dp),
                     tint = MaterialTheme.colorScheme.tertiary
                 )
