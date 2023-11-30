@@ -59,6 +59,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("androidx.camera:camera-core:1.2.3")
+    implementation("androidx.media3:media3-common:1.2.0")
 
     val roomVersion = "2.5.2"
     implementation("androidx.room:room-runtime:$roomVersion")
@@ -127,6 +128,7 @@ dependencies {
 
     // Zxing
     implementation("com.google.zxing:core:3.5.2")
+    implementation("com.journeyapps:zxing-android-embedded:4.2.0")
 
     //Dagger - Hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
@@ -136,7 +138,7 @@ dependencies {
 
     //Bar code
     implementation("com.google.android.gms:play-services-code-scanner:16.1.0")
-    //implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
 
 
