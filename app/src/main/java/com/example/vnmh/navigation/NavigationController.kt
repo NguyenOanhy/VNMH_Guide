@@ -47,16 +47,11 @@ fun NavigationController(
     viewModel: MuseumViewModel,
     favouriteViewModel: FavouriteViewModel
 ) {
-
-    // State to track the selected card
     val selectedCard = remember { mutableStateOf("") }
 
-    // Get the current route
     val currentRoute = currentRoute(navController)
 
-    // Use a Box to layer the background image behind the NavHost
     Box(modifier = Modifier.fillMaxSize()) {
-        // Background image using Coil's rememberImagePainter
         val backgroundImage = painterResource(id = R.drawable.homebg)
         if (currentRoute == NavigationItem.Home.route) {
             Image(
@@ -67,7 +62,6 @@ fun NavigationController(
             )
         }
 
-        // NavHost containing your composables
         NavHost(navController = navController, startDestination = NavigationItem.Home.route) {
             composable(NavigationItem.Home.route) {
                 CollectionsCard(navController = navController, viewModel = viewModel)
@@ -86,17 +80,15 @@ fun NavigationController(
             }
 
             composable("collectionDetailView/{itemId}") { backStackEntry ->
-                // Extract the item ID from the navigation arguments
                 val itemId = backStackEntry.arguments?.getString("itemId")
                 val museumData by viewModel.museumData.observeAsState(emptyList())
                 val selectedItem = museumData.find { it.id == itemId }
 
                 if (selectedItem != null) {
-                    // Pass the selected item to the CollectionDetailView composable
                     CollectionDetailView(selectedItem)
                 } else {
-                    // Handle the case where the item is not found
-                    Text(text = "Item not found", fontSize = 20.sp)
+                    Text(text = "Item not found", fontSize = 20.sp,
+                        modifier = Modifier.padding(top = 50.dp, start = 35.dp))
                 }
             }
 
@@ -113,22 +105,20 @@ fun NavigationController(
                 if (selectedItem != null) {
                     ARView(selectedItem)
                 } else {
-                    Text(text = "Item not found", fontSize = 20.sp)
+                    Text(text = "Item not found", fontSize = 20.sp,
+                        modifier = Modifier.padding(top = 50.dp, start = 35.dp))
                 }
             }
 
             composable(NavigationItem.Camera.route) {
-                CameraView()
+                CameraView(navController = navController)
             }
 
             composable(NavigationItem.Favourite.route) {
                 FavouritesView(favouriteViewModel)
             }
-
-
         }
     }
-
 }
 
 
@@ -218,4 +208,3 @@ fun Navigation(viewModel: MuseumViewModel, favouriteViewModel: FavouriteViewMode
         }
     }
 }
-

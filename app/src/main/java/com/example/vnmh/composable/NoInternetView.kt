@@ -19,7 +19,7 @@ fun NoInternetPlaceholder() {
         modifier = Modifier.fillMaxSize()
     ) {
         Text(
-            text = "No internet connection.\nPlease check your connectivity and try again.",
+            text = "Không có kết nối Internet.\nVui lòng kiểm tra kết nối của bạn và thử lại.",
             color = Color.Gray,
             textAlign = TextAlign.Center,
             fontSize = 18.sp,
