@@ -1,7 +1,10 @@
-package com.example.vnmh.util
+package com.example.vnmh.composable
 
 import android.content.Context
+import android.content.SharedPreferences
+import android.provider.Settings.Global.putString
 import android.widget.Toast
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,13 +22,27 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.edit
 import com.example.vnmh.util.FirebaseAuthManager
 
+private const val SHARED_PREFS_NAME = "LoginPrefs"
+private const val KEY_EMAIL = "email"
+private const val KEY_PASSWORD = "password"
+
 @Composable
-fun AuthenticationScreen(onLoginSuccess: () -> Unit) {
+fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
     val context = LocalContext.current
     val emailState = remember { mutableStateOf(TextFieldValue()) }
     val passwordState = remember { mutableStateOf(TextFieldValue()) }
+    val sharedPreferences = remember { context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE) }
+
+    // Lấy thông tin đăng nhập từ SharedPreferences khi màn hình được khởi tạo
+    val savedEmail = sharedPreferences.getString(KEY_EMAIL, "")
+    val savedPassword = sharedPreferences.getString(KEY_PASSWORD, "")
+    if (!savedEmail.isNullOrEmpty() && !savedPassword.isNullOrEmpty()) {
+        emailState.value = TextFieldValue(savedEmail)
+        passwordState.value = TextFieldValue(savedPassword)
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -58,6 +75,13 @@ fun AuthenticationScreen(onLoginSuccess: () -> Unit) {
                     if (success) {
                         // Đăng nhập thành công
                         Toast.makeText(context, "Logged in successfully", Toast.LENGTH_SHORT).show()
+
+                        // Lưu thông tin đăng nhập vào SharedPreferences
+                        sharedPreferences.edit {
+                            putString(KEY_EMAIL, email)
+                            putString(KEY_PASSWORD, password)
+                        }
+
                         onLoginSuccess.invoke() // Gọi lại callback khi đăng nhập thành công
                     } else {
                         // Đăng nhập thất bại
@@ -72,18 +96,17 @@ fun AuthenticationScreen(onLoginSuccess: () -> Unit) {
         Button(
             modifier = Modifier.padding(16.dp),
             onClick = {
-                // Đăng xuất
-                FirebaseAuthManager.logout()
-                Toast.makeText(context, "Logged out", Toast.LENGTH_SHORT).show()
+                onSignupClick.invoke() // Chuyển sang màn hình đăng ký
             }
         ) {
-            Text("Log Out")
+            Text("Sign Up")
         }
     }
 }
 
+
 @Preview
 @Composable
-fun AuthenticationScreenPreview() {
-    AuthenticationScreen {}
+fun LoginScreenPreview() {
+    LoginScreen({}, {})
 }

@@ -10,11 +10,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import com.example.vnmh.composable.FeedbackBottomSheet
 import com.example.vnmh.navigation.Navigation
 import com.example.vnmh.ui.theme.MuseumAppTheme
 import com.example.vnmh.util.ShakeDetector
-import com.example.vnmh.util.AuthenticationScreen
+import com.example.vnmh.composable.LoginScreen
+import com.example.vnmh.composable.SignupScreen
 import com.example.vnmh.viewModel.FavouriteViewModel
 import com.example.vnmh.viewModel.MuseumViewModel
 
@@ -38,14 +41,30 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun AppContent(viewModel: MuseumViewModel, favouriteViewModel: FavouriteViewModel) {
+        val isOnLoginScreen = remember { mutableStateOf(true) }
         MuseumAppTheme {
-            AuthenticationScreen(
-                onLoginSuccess = {
-                    setContent {
-                        MuseumAppContent(viewModel, favouriteViewModel)
+            if (isOnLoginScreen.value) {
+                LoginScreen(
+                    onLoginSuccess = {
+                        isOnLoginScreen.value = false
+                        setContent {
+                            MuseumAppContent(viewModel, favouriteViewModel)
+                        }
+                    },
+                    onSignupClick = {
+                        isOnLoginScreen.value = false
                     }
-                }
-            )
+                )
+            } else {
+                SignupScreen(
+                    onSignupSuccess = {
+                        isOnLoginScreen.value = true
+                        setContent {
+                            MuseumAppContent(viewModel, favouriteViewModel)
+                        }
+                    }
+                )
+            }
         }
     }
 

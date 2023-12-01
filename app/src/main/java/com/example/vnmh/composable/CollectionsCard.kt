@@ -85,6 +85,7 @@ fun CollectionsCard(
             onClick = {
                 // Đăng xuất
                 FirebaseAuthManager.logout()
+
             }
         ) {
             androidx.compose.material.Text("Log Out")
