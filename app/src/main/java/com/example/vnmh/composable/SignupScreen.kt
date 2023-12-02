@@ -4,9 +4,12 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,12 +17,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.vnmh.util.FirebaseAuthManager
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -33,50 +40,79 @@ fun SignupScreen(onSignupSuccess: () -> Unit) {
     val phoneNumber = remember { mutableStateOf(TextFieldValue()) }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize().padding(top = 52.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "VNMH Guide",
+            color = Color(0xFF795548),
+            style = MaterialTheme.typography.h1.copy(
+                fontWeight = FontWeight.Bold,
+                fontSize = 40.sp,
+                textAlign = TextAlign.Center
+            )
+        )
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 120.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         OutlinedTextField(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(start = 16.dp, end = 16.dp)
+                .fillMaxWidth(),
             value = userName.value,
             onValueChange = { userName.value = it },
-            label = { Text("User name") }
+            label = { Text("Tên người dùng") }
         )
 
         OutlinedTextField(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(start = 16.dp, end = 16.dp)
+                .fillMaxWidth(),
             value = phoneNumber.value,
             onValueChange = { phoneNumber.value = it },
-            label = { Text("Phone Number") },
+            label = { Text("Số điện thoại") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
         OutlinedTextField(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(start = 16.dp, end = 16.dp)
+                .fillMaxWidth(),
             value = emailState.value,
             onValueChange = { emailState.value = it },
             label = { Text("Email") }
         )
 
         OutlinedTextField(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(start = 16.dp, end = 16.dp)
+                .fillMaxWidth(),
             value = passwordState.value,
             onValueChange = { passwordState.value = it },
             visualTransformation = PasswordVisualTransformation(),
-            label = { Text("Password") }
+            label = { Text("Mật khẩu") }
         )
 
         OutlinedTextField(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(start = 16.dp, end = 16.dp)
+                .fillMaxWidth(),
             value = confirmPasswordState.value,
             onValueChange = { confirmPasswordState.value = it },
             visualTransformation = PasswordVisualTransformation(),
-            label = { Text("Confirm Password") }
+            label = { Text("Nhập lại mật khẩu") }
         )
 
         Button(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                .fillMaxWidth(),
             onClick = {
                 val email = emailState.value.text
                 val password = passwordState.value.text
@@ -86,7 +122,7 @@ fun SignupScreen(onSignupSuccess: () -> Unit) {
                     // Đăng ký
                     FirebaseAuthManager.signUp(email, password) { success, errorMessage ->
                         if (success) {
-                            // Save user information to Firestore collection
+                            // Lưu thông tin người dùng vào Firestore
                             val user = hashMapOf(
                                 "username" to userName.value.text,
                                 "phone" to phoneNumber.value.text,
@@ -97,26 +133,35 @@ fun SignupScreen(onSignupSuccess: () -> Unit) {
                             firestore.collection("USERS")
                                 .add(user)
                                 .addOnSuccessListener {
-                                    Toast.makeText(context, "Signed up successfully", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(
+                                        context,
+                                        "Đăng ký thành công",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                     onSignupSuccess.invoke()
                                 }
                                 .addOnFailureListener { e ->
-                                    Toast.makeText(context, "Signup failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(
+                                        context,
+                                        "Đăng ký thất bại: ${e.message}",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                         } else {
                             // Đăng ký thất bại
-                            Toast.makeText(context, "Signup failed", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Đăng ký thất bại", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
                 } else {
                     // Hiển thị thông báo khi mật khẩu không khớp
-                    Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Mật khẩu không khớp", Toast.LENGTH_SHORT).show()
                 }
-            }
+            },
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF795548)), // Màu nâu
         ) {
-            Text("Sign Up")
+            Text("Đăng ký", color = Color.White)
         }
-
     }
 }
 

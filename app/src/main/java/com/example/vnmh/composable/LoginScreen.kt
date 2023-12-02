@@ -1,15 +1,16 @@
 package com.example.vnmh.composable
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.provider.Settings.Global.putString
 import android.widget.Toast
-import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,11 +18,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.edit
 import com.example.vnmh.util.FirebaseAuthManager
 
@@ -45,27 +51,49 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
     }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize().padding(top = 100.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = "VNMH Guide",
+            color = Color(0xFF795548),
+            style = MaterialTheme.typography.h1.copy(
+                fontWeight = FontWeight.Bold,
+                fontSize = 40.sp,
+                textAlign = TextAlign.Center
+            )
+        )
+    }
+
+    Column(
+        modifier = Modifier.fillMaxSize().padding(top = 40.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         OutlinedTextField(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
             value = emailState.value,
             onValueChange = { emailState.value = it },
             label = { Text("Email") }
         )
 
         OutlinedTextField(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
             value = passwordState.value,
             onValueChange = { passwordState.value = it },
             visualTransformation = PasswordVisualTransformation(),
-            label = { Text("Password") }
+            label = { Text("Mật khẩu") }
         )
 
         Button(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
             onClick = {
                 val email = emailState.value.text
                 val password = passwordState.value.text
@@ -74,7 +102,7 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
                 FirebaseAuthManager.login(email, password) { success, errorMessage ->
                     if (success) {
                         // Đăng nhập thành công
-                        Toast.makeText(context, "Logged in successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
 
                         // Lưu thông tin đăng nhập vào SharedPreferences
                         sharedPreferences.edit {
@@ -85,22 +113,25 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
                         onLoginSuccess.invoke() // Gọi lại callback khi đăng nhập thành công
                     } else {
                         // Đăng nhập thất bại
-                        Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }
+            },
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF795548)), // Màu nâu
         ) {
-            Text("Log In")
+            Text("Đăng nhập", color = Color.White)
         }
 
-        Button(
-            modifier = Modifier.padding(16.dp),
-            onClick = {
-                onSignupClick.invoke() // Chuyển sang màn hình đăng ký
-            }
-        ) {
-            Text("Sign Up")
-        }
+        Text(
+            modifier = Modifier
+                .padding(16.dp)
+                .clickable {
+                    onSignupClick.invoke() // Chuyển sang màn hình đăng ký
+                },
+            text = "Nếu chưa có tài khoản, hãy đăng ký",
+            color = Color(0xFF795548),
+            textDecoration = TextDecoration.Underline
+        )
     }
 }
 
