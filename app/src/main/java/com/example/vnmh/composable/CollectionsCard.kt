@@ -71,6 +71,16 @@ fun CollectionsCard(
         modifier = Modifier
             .fillMaxSize()
     ) {
+        Text(
+            text = "Log Out",
+            modifier = Modifier
+                .padding(16.dp)
+                .clickable {
+                    // Xử lý logic khi nhấp vào "Log Out"
+                    // Chuyển sang màn hình đăng nhập
+                    // Ví dụ: navigateToLoginScreen()
+                }
+        )
         Icon(
             modifier = Modifier
                 .align(Alignment.End)
@@ -86,16 +96,6 @@ fun CollectionsCard(
             contentDescription = "Info",
             tint = MaterialTheme.colorScheme.onBackground
         )
-        Button(
-            modifier = Modifier.padding(16.dp),
-            onClick = {
-                // Đăng xuất
-                FirebaseAuthManager.logout()
-
-            }
-        ) {
-            androidx.compose.material.Text("Log Out")
-        }
         if(!isLandscape) {
             Column(
                 modifier = Modifier

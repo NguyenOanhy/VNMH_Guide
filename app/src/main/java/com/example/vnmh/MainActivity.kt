@@ -62,6 +62,9 @@ class MainActivity : ComponentActivity() {
                         setContent {
                             MuseumAppContent(viewModel, favouriteViewModel)
                         }
+                    },
+                    onLoginClick = {
+                        isOnLoginScreen.value = true
                     }
                 )
             }

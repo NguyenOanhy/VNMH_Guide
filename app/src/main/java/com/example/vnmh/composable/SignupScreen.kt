@@ -1,6 +1,7 @@
 package com.example.vnmh.composable
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,7 +33,7 @@ import com.example.vnmh.util.FirebaseAuthManager
 import com.google.firebase.firestore.FirebaseFirestore
 
 @Composable
-fun SignupScreen(onSignupSuccess: () -> Unit) {
+fun SignupScreen(onSignupSuccess: () -> Unit, onLoginClick: () -> Unit) {
     val context = LocalContext.current
     val emailState = remember { mutableStateOf(TextFieldValue()) }
     val passwordState = remember { mutableStateOf(TextFieldValue()) }
@@ -41,7 +43,7 @@ fun SignupScreen(onSignupSuccess: () -> Unit) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize().padding(top = 52.dp),
+            .fillMaxSize().padding(top = 40.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
@@ -57,7 +59,7 @@ fun SignupScreen(onSignupSuccess: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 120.dp),
+            .padding(top = 100.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
@@ -162,11 +164,21 @@ fun SignupScreen(onSignupSuccess: () -> Unit) {
         ) {
             Text("Đăng ký", color = Color.White)
         }
+
+        Text(
+            modifier = Modifier
+                .clickable {
+                    onLoginClick.invoke() // Chuyển sang màn hình đăng ký
+                },
+            text = "Nếu đã có tài khoản, hãy đăng nhập",
+            color = Color(0xFF795548),
+            textDecoration = TextDecoration.Underline
+        )
     }
 }
 
 @Preview
 @Composable
 fun SignupScreenPreview() {
-    SignupScreen ({})
+    SignupScreen ({}, {})
 }
