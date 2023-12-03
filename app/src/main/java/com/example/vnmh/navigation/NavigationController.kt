@@ -52,6 +52,8 @@ fun NavigationController(
     favouriteViewModel: FavouriteViewModel
 ) {
     val selectedCard = remember { mutableStateOf("") }
+    val vm = UserState.current
+
 
     val currentRoute = currentRoute(navController)
 
@@ -68,7 +70,7 @@ fun NavigationController(
 
         NavHost(navController = navController, startDestination = NavigationItem.Home.route) {
             composable(NavigationItem.Home.route) {
-                CollectionsCard(navController = navController, viewModel = viewModel)
+                CollectionsCard(vm)
             }
 
             composable(NavigationItem.Collection.route) {

@@ -1,6 +1,7 @@
 package com.example.vnmh.composable
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,7 +32,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.edit
+import com.example.vnmh.navigation.UserState
 import com.example.vnmh.util.FirebaseAuthManager
+import kotlinx.coroutines.launch
 
 private const val SHARED_PREFS_NAME = "LoginPrefs"
 private const val KEY_EMAIL = "email"
@@ -38,6 +42,9 @@ private const val KEY_PASSWORD = "password"
 
 @Composable
 fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
+
+    val vm = UserState.current
+
     val context = LocalContext.current
     val emailState = remember { mutableStateOf(TextFieldValue("")) }
     val passwordState = remember { mutableStateOf(TextFieldValue("")) }
@@ -52,6 +59,7 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
         emailState.value = TextFieldValue(savedEmail ?: "")
         passwordState.value = TextFieldValue(savedPassword ?: "")
     }
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -74,6 +82,7 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+
         OutlinedTextField(
             modifier = Modifier
                 .padding(16.dp)
@@ -82,6 +91,7 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
             onValueChange = { value ->
                 emailState.value = value
             },
+
             label = { Text("Email") }
         )
         OutlinedTextField(
@@ -103,6 +113,10 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
             onClick = {
                 val email = emailState.value.text
                 val password = passwordState.value.text
+
+                coroutineScope.launch {
+                    vm.signIn()
+                }
 
                 // Đăng nhập
                 FirebaseAuthManager.login(email, password) { success, errorMessage ->

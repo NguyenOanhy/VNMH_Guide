@@ -10,6 +10,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.example.vnmh.composable.FeedbackBottomSheet
@@ -18,6 +19,9 @@ import com.example.vnmh.ui.theme.MuseumAppTheme
 import com.example.vnmh.util.ShakeDetector
 import com.example.vnmh.composable.LoginScreen
 import com.example.vnmh.composable.SignupScreen
+import com.example.vnmh.navigation.UserState
+import com.example.vnmh.navigation.UserStateViewModel
+import com.example.vnmh.util.FirebaseAuthManager
 import com.example.vnmh.viewModel.FavouriteViewModel
 import com.example.vnmh.viewModel.MuseumViewModel
 
@@ -28,6 +32,8 @@ class MainActivity : ComponentActivity() {
     private var mSensorManager: SensorManager? = null
     private var mShakeDetector: ShakeDetector? = null
 
+    private val userState by viewModels<UserStateViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,21 +41,32 @@ class MainActivity : ComponentActivity() {
         mShakeDetector = ShakeDetector()
 
         setContent {
-            AppContent(viewModel, favouriteViewModel)
+            CompositionLocalProvider(UserState provides userState) {
+                ApplicationSwitcher()
+            }
+
         }
     }
 
     @Composable
-    fun AppContent(viewModel: MuseumViewModel, favouriteViewModel: FavouriteViewModel) {
+    fun ApplicationSwitcher() {
+        val vm = UserState.current
+        if (vm.isLoggedIn) {
+            MuseumAppContent(viewModel, favouriteViewModel)
+        } else {
+            FirebaseAuthManager.logout()
+            AppContent()
+        }
+    }
+
+    @Composable
+    fun AppContent() {
         val isOnLoginScreen = remember { mutableStateOf(true) }
         MuseumAppTheme {
             if (isOnLoginScreen.value) {
                 LoginScreen(
                     onLoginSuccess = {
                         isOnLoginScreen.value = false
-                        setContent {
-                            MuseumAppContent(viewModel, favouriteViewModel)
-                        }
                     },
                     onSignupClick = {
                         isOnLoginScreen.value = false
@@ -59,9 +76,6 @@ class MainActivity : ComponentActivity() {
                 SignupScreen(
                     onSignupSuccess = {
                         isOnLoginScreen.value = true
-                        setContent {
-                            MuseumAppContent(viewModel, favouriteViewModel)
-                        }
                     },
                     onLoginClick = {
                         isOnLoginScreen.value = true

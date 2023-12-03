@@ -2,6 +2,7 @@ package com.example.vnmh.composable
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -89,11 +92,11 @@ fun CollectionList(
                             fontSize = 28.sp,
                             fontWeight = FontWeight.Bold,
                         )
-//                        Text(
-//                            text = "Trước năm 1945",
-//                            modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
-//                            fontSize = 16.sp
-//                        )
+                        Text(
+                            text = "Trước năm 1945",
+                            modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
+                            fontSize = 16.sp
+                        )
                         viewModel.fetchBeforePhotograhs()
                     }
 
@@ -106,16 +109,17 @@ fun CollectionList(
                             fontSize = 28.sp,
                             fontWeight = FontWeight.Bold
                         )
-//                        Text(
-//                            text = "Sau năm 1945",
-//                            modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
-//                            fontSize = 16.sp
-//                        )
+                        Text(
+                            text = "Sau năm 1945",
+                            modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
+                            fontSize = 16.sp
+                        )
                         viewModel.fetchAfterPhotographs()
                     }
                 }
             }
         }
+
 
         // Tab Row
         TabRow(
@@ -123,7 +127,13 @@ fun CollectionList(
             containerColor = Color.Transparent,
             modifier = Modifier.padding(12.dp, 0.dp),
             divider = {},
-            indicator = {}
+            indicator = { tabPositions ->
+                TabRowDefaults.Indicator(
+                    color = ColorProvider.mainColor,
+                    height = 2.dp,
+                    modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex])
+                )
+            }
         ) {
             tabs.forEachIndexed { index, title ->
                 Tab(
