@@ -29,11 +29,11 @@ class QrCodeAnalyzer(
                 }
 
                 .addOnCanceledListener {
-                    barCodeResults.value = "Canceled"
+                    barCodeResults.value = "Hủy bỏ"
                 }
 
                 .addOnFailureListener() {
-                    barCodeResults.value = "Failed"
+                    barCodeResults.value = "Thất bại!"
                 }
         } catch (e: Exception) {
 

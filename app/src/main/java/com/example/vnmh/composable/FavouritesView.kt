@@ -33,6 +33,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.vnmh.ui.theme.ColorProvider
 import com.example.vnmh.viewModel.FavouriteViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -47,7 +48,9 @@ fun FavouritesView(favouriteViewModel: FavouriteViewModel) {
             Column(modifier = Modifier.fillMaxSize()) {
                 Text(
                     text = "Mục ưa thích",
-                    modifier = Modifier.padding(20.dp, 24.dp, 20.dp, 2.dp),
+                    modifier = Modifier
+                        .padding(20.dp, 24.dp, 20.dp, 10.dp)
+                        .align(Alignment.CenterHorizontally),
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -81,13 +84,13 @@ fun FavouritesView(favouriteViewModel: FavouriteViewModel) {
                             .padding(16.dp)
                             .align(Alignment.BottomEnd),
                         shape = RoundedCornerShape(16.dp),
-                        backgroundColor = MaterialTheme.colorScheme.tertiary,
+                        backgroundColor = ColorProvider.mainColor,
                         elevation = FloatingActionButtonDefaults.elevation(2.dp, 2.dp, 2.dp, 2.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Image,
                             contentDescription = "Navigate to Favorite Animated View",
-                            tint = MaterialTheme.colorScheme.onTertiary,
+                            tint = MaterialTheme.colorScheme.onPrimary,
                         )
                     }
                 }
@@ -105,7 +108,7 @@ fun FavouritesView(favouriteViewModel: FavouriteViewModel) {
             if (itemId != null) {
                 FavouriteDetailView(itemId, favouriteViewModel)
             } else {
-                Text(text = "Item not found", fontSize = 20.sp)
+                Text(text = "Không tìm thấy thông tin!", fontSize = 20.sp)
             }
         }
     }

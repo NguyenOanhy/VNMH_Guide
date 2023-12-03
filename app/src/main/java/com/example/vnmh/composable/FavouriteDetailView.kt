@@ -76,6 +76,6 @@ fun FavouriteDetailView(itemId: String, favouriteViewModel: FavouriteViewModel) 
             }
         }
     } else {
-        Text(text = "Item not found", fontSize = 20.sp)
+        Text(text = "Không tìm thấy thông tin!", fontSize = 20.sp)
     }
 }

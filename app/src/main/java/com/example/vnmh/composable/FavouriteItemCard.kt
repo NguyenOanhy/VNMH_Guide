@@ -39,6 +39,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.vnmh.room.FavouriteItem
+import com.example.vnmh.ui.theme.ColorProvider
 import com.example.vnmh.viewModel.FavouriteViewModel
 import java.net.URLEncoder
 
@@ -126,7 +127,7 @@ fun FavouriteItemCard(
                     imageVector = icon,
                     contentDescription = "Mục ưa thích",
                     modifier = Modifier.size(24.dp),
-                    tint = MaterialTheme.colorScheme.tertiary
+                    tint = ColorProvider.mainColor
                 )
             }
         }

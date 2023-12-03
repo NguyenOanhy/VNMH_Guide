@@ -39,6 +39,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.vnmh.analyzer.QrCodeAnalyzer
+import com.example.vnmh.ui.theme.ColorProvider
 import kotlinx.coroutines.launch
 import java.net.URLEncoder
 
@@ -146,7 +147,7 @@ private fun ScanBarcode(
                     .width(200.dp)
                     .height(48.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Black
+                    containerColor = ColorProvider.mainColor
                 ),
                 onClick = {
                     scope.launch {
@@ -155,7 +156,7 @@ private fun ScanBarcode(
                 }
             ) {
                 Text(
-                    text = "Scan",
+                    text = "Quét",
                     textAlign = TextAlign.Center,
                 )
             }

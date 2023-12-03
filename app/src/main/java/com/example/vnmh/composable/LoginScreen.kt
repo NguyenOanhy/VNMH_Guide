@@ -79,7 +79,6 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
             onValueChange = { emailState.value = it },
             label = { Text("Email") }
         )
-
         OutlinedTextField(
             modifier = Modifier
                 .padding(16.dp)
@@ -101,9 +100,7 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
                 // Đăng nhập
                 FirebaseAuthManager.login(email, password) { success, errorMessage ->
                     if (success) {
-                        // Đăng nhập thành công
                         Toast.makeText(context, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
-
                         // Lưu thông tin đăng nhập vào SharedPreferences
                         sharedPreferences.edit {
                             putString(KEY_EMAIL, email)

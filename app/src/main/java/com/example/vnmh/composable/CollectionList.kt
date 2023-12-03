@@ -42,6 +42,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -49,6 +50,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.vnmh.data.remote.dto.MuseumItem
 import com.example.vnmh.room.FavouriteItem
+import com.example.vnmh.ui.theme.ColorProvider
 import com.example.vnmh.util.isInternetAvailable
 import com.example.vnmh.viewModel.FavouriteViewModel
 import com.example.vnmh.viewModel.MuseumViewModel
@@ -65,7 +67,6 @@ fun CollectionList(
     // Check for internet availability
     val context = LocalContext.current
     val isConnected = isInternetAvailable(context)
-
     var selectedTabIndex by remember { mutableIntStateOf(0) }
 
     val tabs = when (selectedCard) {
@@ -82,30 +83,34 @@ fun CollectionList(
                     0 -> {
                         Text(
                             text = "Bảo tàng Lịch sử Quốc gia",
-                            modifier = Modifier.padding(20.dp, 24.dp, 20.dp, 2.dp),
+                            modifier = Modifier
+                                .padding(20.dp, 24.dp, 20.dp, 20.dp)
+                                .align(Alignment.CenterHorizontally),
                             fontSize = 28.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
                         )
-                        Text(
-                            text = "Trước năm 1945",
-                            modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
-                            fontSize = 16.sp
-                        )
+//                        Text(
+//                            text = "Trước năm 1945",
+//                            modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
+//                            fontSize = 16.sp
+//                        )
                         viewModel.fetchBeforePhotograhs()
                     }
 
                     1 -> {
                         Text(
                             text = "Bảo tàng Lịch sử Quốc gia",
-                            modifier = Modifier.padding(20.dp, 24.dp, 20.dp, 2.dp),
+                            modifier = Modifier
+                                .padding(20.dp, 24.dp, 20.dp, 20.dp)
+                                .align(Alignment.CenterHorizontally),
                             fontSize = 28.sp,
                             fontWeight = FontWeight.Bold
                         )
-                        Text(
-                            text = "Sau năm 1945",
-                            modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
-                            fontSize = 16.sp
-                        )
+//                        Text(
+//                            text = "Sau năm 1945",
+//                            modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
+//                            fontSize = 16.sp
+//                        )
                         viewModel.fetchAfterPhotographs()
                     }
                 }
@@ -117,7 +122,8 @@ fun CollectionList(
             selectedTabIndex = selectedTabIndex,
             containerColor = Color.Transparent,
             modifier = Modifier.padding(12.dp, 0.dp),
-            divider = {}
+            divider = {},
+            indicator = {}
         ) {
             tabs.forEachIndexed { index, title ->
                 Tab(
@@ -125,7 +131,15 @@ fun CollectionList(
                     onClick = {
                         selectedTabIndex = index
                     },
-                    text = { Text(text = title) }
+                    text = {
+                        Text(
+                            text = title,
+                            fontSize = 16.sp,
+                            fontWeight = if(selectedTabIndex==index) FontWeight.Bold else FontWeight.Normal,
+                            color = if(selectedTabIndex==index) ColorProvider.mainColor else Color.Black
+                        )
+                    },
+                    selectedContentColor = ColorProvider.mainColor
                 )
             }
         }
@@ -250,9 +264,9 @@ fun CollectionList(
                                         if (isFavouriteState) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
                                     Icon(
                                         imageVector = icon,
-                                        contentDescription = "Favorite",
+                                        contentDescription = "Mục ưa thích",
                                         modifier = Modifier.size(24.dp),
-                                        tint = MaterialTheme.colorScheme.tertiary
+                                        tint = ColorProvider.mainColor
                                     )
                                 }
                             }

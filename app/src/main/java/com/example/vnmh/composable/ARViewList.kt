@@ -61,9 +61,11 @@ fun ARViewList(
     ) {
         Text(
             text = "VR 3D",
-            modifier = Modifier.padding(20.dp, 24.dp, 20.dp, 2.dp),
+            modifier = Modifier
+                .padding(20.dp, 24.dp, 20.dp, 2.dp)
+                .align(Alignment.CenterHorizontally),
             fontSize = 28.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         )
         viewModel.fetchUrlAR()
         Spacer(modifier = Modifier.width(12.dp))

@@ -27,7 +27,7 @@ private val LightColorScheme = lightColorScheme(
     secondary = Secondary,
     tertiary = Tertiary,
 
-    background = Color(0xFFFFFFFF),
+    background = Color(0xFF795548),
     surface = Color(0xFFF5F3F0),
     onPrimary = Color.White,
     onSecondary = Color.White,
@@ -66,7 +66,7 @@ fun MuseumAppTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = CustomTypography,
         content = content
     )
 }

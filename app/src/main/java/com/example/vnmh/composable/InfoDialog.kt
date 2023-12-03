@@ -11,11 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Feedback
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Place
-import androidx.compose.material.icons.filled.PriceChange
+import androidx.compose.material.icons.outlined.Feedback
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Place
+import androidx.compose.material.icons.outlined.PriceChange
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.vnmh.ui.theme.ColorProvider
 
 @Composable
 fun InfoDialog(onDismiss: () -> Unit) {
@@ -59,8 +61,8 @@ fun InfoDialog(onDismiss: () -> Unit) {
                     // Hiển thị biểu tượng
                     Icon(
 //                        imageVector = Icons.Outlined.Home,
-                        imageVector = Icons.Filled.Home,
-                        tint = MaterialTheme.colorScheme.tertiary,
+                        imageVector = Icons.Outlined.Home,
+                        tint = ColorProvider.mainColor,
                         contentDescription = null,
                         modifier = Modifier
                             .scale(1.2f) // Điều chỉnh kích thước của biểu tượng
@@ -89,8 +91,8 @@ fun InfoDialog(onDismiss: () -> Unit) {
                 ) {
                     // Hiển thị biểu tượng
                     Icon(
-                        imageVector = Icons.Filled.PriceChange,
-                        tint = MaterialTheme.colorScheme.tertiary,
+                        imageVector = Icons.Outlined.PriceChange,
+                        tint = ColorProvider.mainColor,
                         contentDescription = null,
                         modifier = Modifier
                             .scale(1.2f) // Điều chỉnh kích thước của biểu tượng
@@ -119,8 +121,8 @@ fun InfoDialog(onDismiss: () -> Unit) {
                 ) {
                     // Hiển thị biểu tượng
                     Icon(
-                        imageVector = Icons.Filled.Place,
-                        tint = MaterialTheme.colorScheme.tertiary,
+                        imageVector = Icons.Outlined.Place,
+                        tint = ColorProvider.mainColor,
                         contentDescription = null,
                         modifier = Modifier
                             .scale(1.2f) // Điều chỉnh kích thước của biểu tượng
@@ -146,8 +148,8 @@ fun InfoDialog(onDismiss: () -> Unit) {
                 ) {
                     // Hiển thị biểu tượng
                     Icon(
-                        imageVector = Icons.Filled.Feedback,
-                        tint = MaterialTheme.colorScheme.tertiary,
+                        imageVector = Icons.Outlined.Feedback,
+                        tint = ColorProvider.mainColor,
                         contentDescription = null,
                         modifier = Modifier
                             .scale(1.2f) // Điều chỉnh kích thước của biểu tượng
@@ -167,8 +169,13 @@ fun InfoDialog(onDismiss: () -> Unit) {
                         .padding(start = 25.dp)
                 )
                 Spacer(modifier = Modifier.height(24.dp))
-                Button(onClick = onDismiss) {
-                    Text("Close")
+                Button(
+                    onClick = onDismiss,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = ColorProvider.mainColor
+                    )
+                ) {
+                    Text("Đóng")
                 }
             }
         }

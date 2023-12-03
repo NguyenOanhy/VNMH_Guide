@@ -177,8 +177,8 @@ fun FavouriteAnimatedView(favouriteViewModel: FavouriteViewModel) {
                 } else {
                     Box(
                         modifier = Modifier
-                            .offset(y = (16).dp)
-                            .padding(8.dp)
+//                            .offset(y = (16).dp)
+//                            .padding(8.dp)
                             .align(Alignment.BottomCenter)
                     ) {
                         IconButton(
@@ -190,7 +190,8 @@ fun FavouriteAnimatedView(favouriteViewModel: FavouriteViewModel) {
                                 }
                             },
                             modifier = Modifier
-                                .align(Alignment.CenterStart)
+                                .align(Alignment.BottomStart)
+                                .padding(70.dp, 30.dp)
                                 .clip(RoundedCornerShape(100))
                                 .background(MaterialTheme.colorScheme.background)
                         ) {
@@ -208,7 +209,8 @@ fun FavouriteAnimatedView(favouriteViewModel: FavouriteViewModel) {
                                 }
                             },
                             modifier = Modifier
-                                .align(Alignment.CenterEnd)
+                                .align(Alignment.BottomEnd)
+                                .padding(70.dp, 30.dp)
                                 .clip(RoundedCornerShape(100))
                                 .background(MaterialTheme.colorScheme.background)
                         ) {
@@ -233,7 +235,7 @@ fun FavouriteAnimatedView(favouriteViewModel: FavouriteViewModel) {
                             Image(
                                 painter = painter,
                                 contentDescription = null,
-                                contentScale = ContentScale.Fit,
+                                contentScale = ContentScale.Crop,
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .padding(40.dp)

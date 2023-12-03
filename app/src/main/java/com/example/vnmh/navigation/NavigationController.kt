@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -19,8 +20,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -38,6 +41,7 @@ import com.example.vnmh.composable.CollectionDetailView
 import com.example.vnmh.composable.CollectionList
 import com.example.vnmh.composable.CollectionsCard
 import com.example.vnmh.composable.FavouritesView
+import com.example.vnmh.ui.theme.ColorProvider
 import com.example.vnmh.viewModel.FavouriteViewModel
 import com.example.vnmh.viewModel.MuseumViewModel
 
@@ -137,7 +141,7 @@ fun Material3BottomBar(
 ) {
     NavigationBar(
         modifier = Modifier,
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = Color.Transparent
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -150,13 +154,14 @@ fun Material3BottomBar(
 
             NavigationBarItem(
                 label = {
-                    Text(text = item.label)
+                    Text(
+                        text = item.label,
+                    )
                 },
                 icon = {
                     Icon(
                         imageVector = if (isSelected) item.selectedIcon else item.unselectedIcon,
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
                     )
                 },
                 selected = isSelected,
@@ -173,8 +178,10 @@ fun Material3BottomBar(
                 },
                 colors = NavigationBarItemDefaults.colors(
                     indicatorColor = MaterialTheme.colorScheme.surfaceVariant,
-                    unselectedTextColor = MaterialTheme.colorScheme.onBackground,
-                    selectedTextColor = MaterialTheme.colorScheme.primary
+                    unselectedTextColor = Color.Black,
+                    unselectedIconColor = Color.Black,
+                    selectedTextColor = ColorProvider.mainColor,
+                    selectedIconColor = ColorProvider.mainColor,
                 )
             )
         }
