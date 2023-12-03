@@ -16,6 +16,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.vnmh.composable.FeedbackBottomSheet
 import com.example.vnmh.navigation.Navigation
 import com.example.vnmh.ui.theme.MuseumAppTheme
@@ -47,6 +48,7 @@ class MainActivity : ComponentActivity() {
         mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         mShakeDetector = ShakeDetector()
 
+        installSplashScreen()
         setContent {
             CompositionLocalProvider(UserState provides userState) {
                 ApplicationSwitcher()
@@ -118,16 +120,16 @@ class MainActivity : ComponentActivity() {
         val context = LocalContext.current
         Navigation(viewModel, favouriteViewModel)
         FeedbackBottomSheet(
-                shakeDetector = mShakeDetector,
-                onSendFeedback = { feedback ->
-                    sendFeedbackToFirebase(feedback, firestore = firestore)
-                    Toast.makeText(context, "Gửi phản hồi thành công!", Toast.LENGTH_SHORT).show()
+            shakeDetector = mShakeDetector,
+            onSendFeedback = { feedback ->
+                sendFeedbackToFirebase(feedback, firestore = firestore)
+                Toast.makeText(context, "Gửi phản hồi thành công!", Toast.LENGTH_SHORT).show()
 //                    val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "feedback@android.com", null)).apply {
 //                        putExtra(Intent.EXTRA_SUBJECT, "Museum App Feedback")
 //                        putExtra(Intent.EXTRA_TEXT, feedback)
 //                    }
 //                    startActivity(emailIntent)
-                },
+            },
         )
     }
 

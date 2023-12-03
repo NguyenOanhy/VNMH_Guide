@@ -86,6 +86,8 @@ dependencies {
     val navVersion = "2.7.4"
     implementation("androidx.navigation:navigation-compose:$navVersion")
 
+    implementation ("androidx.core:core-splashscreen:1.0.1")
+
     val lifecycleVersion = "2.6.2"
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
