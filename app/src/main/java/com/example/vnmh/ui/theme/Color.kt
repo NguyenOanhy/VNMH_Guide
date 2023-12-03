@@ -12,3 +12,12 @@ class ColorProvider {
         val mainColor = Color(121, 85, 72)
     }
 }
+
+class FeedBackColor {
+    companion object {
+        val mainColor = Color(121, 85, 72)
+        val backColor = Color(255, 240, 235, 176)
+        val fieldColor = Color(231, 208, 183, 255)
+    }
+
+}

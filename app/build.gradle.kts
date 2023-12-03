@@ -56,6 +56,7 @@ android {
 
 dependencies {
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-database")
     implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("androidx.camera:camera-core:1.2.3")
