@@ -14,6 +14,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -38,16 +39,18 @@ private const val KEY_PASSWORD = "password"
 @Composable
 fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
     val context = LocalContext.current
-    val emailState = remember { mutableStateOf(TextFieldValue()) }
-    val passwordState = remember { mutableStateOf(TextFieldValue()) }
+    val emailState = remember { mutableStateOf(TextFieldValue("")) }
+    val passwordState = remember { mutableStateOf(TextFieldValue("")) }
     val sharedPreferences = remember { context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE) }
 
     // Lấy thông tin đăng nhập từ SharedPreferences khi màn hình được khởi tạo
     val savedEmail = sharedPreferences.getString(KEY_EMAIL, "")
     val savedPassword = sharedPreferences.getString(KEY_PASSWORD, "")
-    if (!savedEmail.isNullOrEmpty() && !savedPassword.isNullOrEmpty()) {
-        emailState.value = TextFieldValue(savedEmail)
-        passwordState.value = TextFieldValue(savedPassword)
+
+    // Sử dụng LaunchedEffect để gán giá trị ban đầu khi màn hình được khởi tạo
+    LaunchedEffect(Unit) {
+        emailState.value = TextFieldValue(savedEmail ?: "")
+        passwordState.value = TextFieldValue(savedPassword ?: "")
     }
 
     Column(
@@ -76,7 +79,9 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
                 .padding(16.dp)
                 .fillMaxWidth(),
             value = emailState.value,
-            onValueChange = { emailState.value = it },
+            onValueChange = { value ->
+                emailState.value = value
+            },
             label = { Text("Email") }
         )
         OutlinedTextField(
@@ -84,7 +89,9 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
                 .padding(16.dp)
                 .fillMaxWidth(),
             value = passwordState.value,
-            onValueChange = { passwordState.value = it },
+            onValueChange = { value ->
+                passwordState.value = value
+            },
             visualTransformation = PasswordVisualTransformation(),
             label = { Text("Mật khẩu") }
         )
