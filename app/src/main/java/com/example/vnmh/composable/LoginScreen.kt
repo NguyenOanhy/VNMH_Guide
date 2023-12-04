@@ -115,14 +115,15 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
                 val email = emailState.value.text
                 val password = passwordState.value.text
 
-                coroutineScope.launch {
-                    vm.signIn()
-                }
-
                 // Đăng nhập
                 FirebaseAuthManager.login(email, password) { success, errorMessage ->
                     if (success) {
                         Toast.makeText(context, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
+
+                        coroutineScope.launch {
+                            vm.signIn()
+                        }
+
                         // Lưu thông tin đăng nhập vào SharedPreferences
                         sharedPreferences.edit {
                             putString(KEY_EMAIL, email)

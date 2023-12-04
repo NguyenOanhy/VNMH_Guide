@@ -68,8 +68,9 @@ fun CollectionDetailView(selectedItem: MuseumItem) {
 
             Text(
                 text = selectedItem.imageDescription,
+                fontSize = 15.sp,
                 modifier = Modifier
-                    .padding(start = 24.dp, top = 0.dp, end = 24.dp, bottom = 24.dp)
+                    .padding(start = 20.dp, top = 0.dp, end = 20.dp, bottom = 0.dp)
             )
             addImageWithDescription(selectedItem.image1, selectedItem.description1)
             addImageWithDescription(selectedItem.image2, selectedItem.description2)
@@ -94,7 +95,7 @@ fun addImageWithDescription(imageUrl: String, description: String) {
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f) // Set the aspect ratio to 1:1
-                .padding(0.dp, 0.dp),
+                .padding(10.dp, 10.dp),
             alignment = Alignment.Center,
         )
 
@@ -102,8 +103,9 @@ fun addImageWithDescription(imageUrl: String, description: String) {
         if (description.isNotEmpty()) {
             Text(
                 text = description,
+                fontSize = 15.sp,
                 modifier = Modifier
-                    .padding(start = 5.dp, top = 0.dp, end = 0.dp, bottom = 0.dp)
+                    .padding(start = 20.dp, top = 0.dp, end = 20.dp, bottom = 0.dp)
             )
         }
     }
