@@ -12,5 +12,11 @@ data class FavouriteItem(
     val nonPresenterAuthorsName: String,
     val title: String,
     val year: String,
-    var isFavourite: Boolean = false
+    val image1: String,
+    val description1: String,
+    val image2: String,
+    val description2: String,
+    val image3: String,
+    val description3: String,
+    var isFavourite: Boolean = false,
 )

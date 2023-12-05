@@ -92,11 +92,6 @@ fun CollectionList(
                             fontSize = 28.sp,
                             fontWeight = FontWeight.Bold,
                         )
-                        Text(
-                            text = "Trước năm 1945",
-                            modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
-                            fontSize = 16.sp
-                        )
                         viewModel.fetchBeforePhotograhs()
                     }
 
@@ -108,11 +103,6 @@ fun CollectionList(
                                 .align(Alignment.CenterHorizontally),
                             fontSize = 28.sp,
                             fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            text = "Sau năm 1945",
-                            modifier = Modifier.padding(20.dp, 0.dp, 20.dp, 20.dp),
-                            fontSize = 16.sp
                         )
                         viewModel.fetchAfterPhotographs()
                     }
@@ -246,6 +236,12 @@ fun CollectionList(
                                             nonPresenterAuthorsName = item.nonPresenterAuthorsName,
                                             title = item.title,
                                             year = item.year,
+                                            image1 = item.image1,
+                                            description1 = item.description1,
+                                            image2 = item.image2,
+                                            description2 = item.description2,
+                                            image3 = item.image3,
+                                            description3 = item.description3,
                                             isFavourite = newFavouriteState
                                         )
 

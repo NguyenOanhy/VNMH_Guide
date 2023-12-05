@@ -63,7 +63,7 @@ fun FavouriteDetailView(itemId: String, favouriteViewModel: FavouriteViewModel) 
                     modifier = Modifier
                         .padding(start = 24.dp, top = 8.dp, end = 24.dp, bottom = 8.dp)
                 )
-                Text(text = selectedItem.nonPresenterAuthorsName.trim().takeIf { it.isNotEmpty() } ?: "Unknown Artist",
+                Text(text = selectedItem.nonPresenterAuthorsName.trim().takeIf { it.isNotEmpty() } ?: "Unknown",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Normal,
                     modifier = Modifier
@@ -73,9 +73,45 @@ fun FavouriteDetailView(itemId: String, favouriteViewModel: FavouriteViewModel) 
                     modifier = Modifier
                         .padding(start = 24.dp, top = 0.dp, end = 24.dp, bottom = 24.dp)
                 )
+
+                addFavorite(selectedItem.image1, selectedItem.description1)
+                addFavorite(selectedItem.image2, selectedItem.description2)
+                addFavorite(selectedItem.image3, selectedItem.description3)
             }
         }
     } else {
         Text(text = "Không tìm thấy thông tin!", fontSize = 20.sp)
+    }
+}
+
+@Composable
+fun addFavorite(imageUrl: String, description: String) {
+    if (imageUrl.isNotEmpty()) {
+        Image(
+            painter = rememberAsyncImagePainter(
+                ImageRequest.Builder(LocalContext.current)
+                    .data(data = imageUrl)
+                    .apply {
+                        crossfade(true)
+                    }
+                    .build()
+            ),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f) // Set the aspect ratio to 1:1
+                .padding(10.dp, 10.dp),
+            alignment = Alignment.Center,
+        )
+
+        // Check if the description is not empty
+        if (description.isNotEmpty()) {
+            Text(
+                text = description,
+                fontSize = 15.sp,
+                modifier = Modifier
+                    .padding(start = 20.dp, top = 0.dp, end = 20.dp, bottom = 0.dp)
+            )
+        }
     }
 }

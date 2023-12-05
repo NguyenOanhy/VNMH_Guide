@@ -207,13 +207,6 @@ fun SignupScreen(onSignupSuccess: () -> Unit, onLoginClick: () -> Unit) {
                         return@Button
                     }
 
-                    val emailRegex = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]\$")
-                    if (!emailRegex.matches(email)) {
-                        // Show Toast if the email is not in the correct format
-                        Toast.makeText(context, "Email không đúng định dạng", Toast.LENGTH_SHORT).show()
-                        return@Button
-                    }
-
                     if (password.length < 6) {
                         Toast.makeText(context, "Mật khẩu phải nhiều hơn 6 ký tự", Toast.LENGTH_SHORT).show()
                         return@Button
