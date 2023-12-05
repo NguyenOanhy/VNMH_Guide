@@ -1,7 +1,7 @@
 package com.example.vnmh.composable
 
 import android.content.Context
-import android.util.Log
+import android.view.KeyEvent
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -21,8 +22,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -42,6 +47,7 @@ private const val SHARED_PREFS_NAME = "LoginPrefs"
 private const val KEY_EMAIL = "email"
 private const val KEY_PASSWORD = "password"
 
+@ExperimentalComposeUiApi
 @Composable
 fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
 
@@ -62,6 +68,8 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
         passwordState.value = TextFieldValue(savedPassword ?: "")
     }
     val coroutineScope = rememberCoroutineScope()
+
+    val (focusRequester1, focusRequester2, focusRequester3) = FocusRequester.createRefs()
 
     Column(
         modifier = Modifier
@@ -84,33 +92,61 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-
         OutlinedTextField(
             modifier = Modifier
                 .padding(16.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .onKeyEvent {event ->
+                    if (event.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER){
+                        focusRequester2.requestFocus()
+                        true
+                    } else {
+                        false
+                    }
+                },
             value = emailState.value,
+            singleLine = true,
             onValueChange = { value ->
                 emailState.value = value
             },
-            label = { Text("Email") }
+            label = { Text("Email") },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(
+                onNext = { focusRequester2.requestFocus() }
+            ),
+
         )
         OutlinedTextField(
             modifier = Modifier
                 .padding(16.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .focusRequester(focusRequester2)
+                .onKeyEvent {event ->
+                    if (event.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER){
+                        focusRequester3.requestFocus()
+                        true
+                    } else {
+                        false
+                    }
+                },
             value = passwordState.value,
+            singleLine = true,
             onValueChange = { value ->
                 passwordState.value = value
             },
             visualTransformation = PasswordVisualTransformation(),
-            label = { Text("Mật khẩu") }
+            label = { Text("Mật khẩu") },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(
+                onNext = { focusRequester3.requestFocus() }
+            ),
         )
 
         Button(
             modifier = Modifier
                 .padding(16.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .focusRequester(focusRequester3),
             onClick = {
                 val email = emailState.value.text
                 val password = passwordState.value.text
@@ -155,7 +191,7 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignupClick: () -> Unit) {
     }
 }
 
-
+@ExperimentalComposeUiApi
 @Preview
 @Composable
 fun LoginScreenPreview() {
