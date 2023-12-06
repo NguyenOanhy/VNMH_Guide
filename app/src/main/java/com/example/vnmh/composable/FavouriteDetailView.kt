@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -38,9 +39,9 @@ fun FavouriteDetailView(itemId: String, favouriteViewModel: FavouriteViewModel) 
                     crossfade(true)
                 }).build()
         )
-
         Box(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
             Column(
@@ -85,16 +86,14 @@ fun FavouriteDetailView(itemId: String, favouriteViewModel: FavouriteViewModel) 
 }
 
 @Composable
-fun addFavorite(imageUrl: String, description: String) {
-    if (imageUrl.isNotEmpty()) {
+fun addFavorite(image: String, description: String) {
+    if (image.isNotEmpty()) {
         Image(
             painter = rememberAsyncImagePainter(
                 ImageRequest.Builder(LocalContext.current)
-                    .data(data = imageUrl)
-                    .apply {
+                    .data(data = image).apply(block = fun ImageRequest.Builder.() {
                         crossfade(true)
-                    }
-                    .build()
+                    }).build()
             ),
             contentDescription = null,
             modifier = Modifier
@@ -103,15 +102,16 @@ fun addFavorite(imageUrl: String, description: String) {
                 .padding(10.dp, 10.dp),
             alignment = Alignment.Center,
         )
+    }
 
         // Check if the description is not empty
-        if (description.isNotEmpty()) {
-            Text(
-                text = description,
-                fontSize = 15.sp,
-                modifier = Modifier
-                    .padding(start = 20.dp, top = 0.dp, end = 20.dp, bottom = 0.dp)
-            )
-        }
+    if (description.isNotEmpty()) {
+        Text(
+            text = description,
+            fontSize = 15.sp,
+            modifier = Modifier
+                .padding(start = 20.dp, top = 0.dp, end = 20.dp, bottom = 0.dp)
+        )
     }
+
 }

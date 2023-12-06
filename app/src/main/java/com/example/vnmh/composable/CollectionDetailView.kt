@@ -1,5 +1,8 @@
 package com.example.vnmh.composable
 
+import android.util.Log
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,18 +15,44 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.vnmh.data.remote.dto.MuseumItem
 
 @Composable
-fun CollectionDetailView(selectedItem: MuseumItem) {
+fun CollectionDetailView(selectedItem: MuseumItem, navController: NavController,) {
+
+    val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+    val backCallback = remember {
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (selectedItem.id.contains("D2005")) {
+                    Log.d("Quay lại", "Yessssss")
+                    navController.navigate("1")
+                } else if (selectedItem.id.contains("D2000")) {
+                    navController.navigate("0")
+                } else {
+                    navController.popBackStack()
+                }
+            }
+        }
+    }
+
+    DisposableEffect(onBackPressedDispatcher) {
+        onBackPressedDispatcher?.addCallback(backCallback)
+        onDispose {
+            backCallback.remove()
+        }
+    }
 
     val painter = rememberAsyncImagePainter(
         ImageRequest.Builder(LocalContext.current)

@@ -81,7 +81,22 @@ fun NavigationController(
                     viewModel,
                     selectedCard.value,
                     navController,
-                    favouriteViewModel
+                    favouriteViewModel,
+                    0
+                )
+            }
+
+            composable("{tab}") { backStackEntry ->
+                val museumData by viewModel.museumData.observeAsState(emptyList())
+                val tabId = backStackEntry.arguments?.getString("tab")?.toIntOrNull() ?: 0
+                selectedCard.value = "Start"
+                CollectionList(
+                    museumData,
+                    viewModel,
+                    selectedCard.value,
+                    navController,
+                    favouriteViewModel,
+                    tabId
                 )
             }
 
@@ -91,7 +106,7 @@ fun NavigationController(
                 val selectedItem = museumData.find { it.id == itemId }
 
                 if (selectedItem != null) {
-                    CollectionDetailView(selectedItem)
+                    CollectionDetailView(selectedItem, navController)
                 } else {
                     Text(text = "Item not found", fontSize = 20.sp,
                         modifier = Modifier.padding(top = 50.dp, start = 35.dp))
